@@ -25,7 +25,7 @@
 
 /* ------- define ----------------------------------------------------------------------------------------------------*/
 
-
+#define APP_TIM htim2
 
 
 
@@ -34,13 +34,15 @@
 /* I. OS */
 #include "FreeRTOS.h"
 #include "event_groups.h"
-#include "task.h"
 #include "queue.h"
+#include "task.h"
 
 /* II. standard lib */
+#include <cstring>
 #include <vector>
 
-#include "stream_buffer.h"
+/* III. drivers */
+#include "stm32h7xx_hal.h"
 
 
 /* ------- class prototypes-------------------------------------------------------------------------------------------*/
@@ -76,17 +78,19 @@ class IApplication {
 
     class TaskInfo {
       public:
-        TaskInfo(const char* name, uint16_t stackSize, IApplication* pThread, UBaseType_t priority,
-                 StackType_t* stackBuf, StaticTask_t* pxTask)
-            : name(name), stackSize(stackSize), pThread(pThread), priority(priority), stackBuf(stackBuf),
-              pxTask(pxTask) {}
-        const char* name       = nullptr;
-        uint16_t stackSize     = 0;
-        IApplication* pThread  = nullptr;
-        UBaseType_t priority   = 0;
-        TaskHandle_t tskHandle = nullptr;
-        StackType_t* stackBuf  = nullptr;
-        StaticTask_t* pxTask   = nullptr;
+        TaskInfo(bool enable, const char* name, uint16_t stackSize, IApplication* pThread, UBaseType_t priority,
+                 TaskHandle_t* pTskHandle, StackType_t* stackBuf, StaticTask_t* pxTask)
+            : enable(enable), name(name), stackSize(stackSize), pThread(pThread), priority(priority),
+              pTskHandle(pTskHandle), stackBuf(stackBuf), pxTask(pxTask) {}
+        bool enable              = false;
+        const char* name         = nullptr;
+        uint16_t stackSize       = 0;
+        IApplication* pThread    = nullptr;
+
+        UBaseType_t priority     = 0;
+        TaskHandle_t* pTskHandle = nullptr;
+        StackType_t* stackBuf    = nullptr;
+        StaticTask_t* pxTask     = nullptr;
     };
 
     inline static std::vector<TaskInfo> _taskInfoRegistry;
@@ -97,27 +101,45 @@ class IApplication {
 };
 
 
-
+/**
+ * 所有静态任务的基类
+ */
 class StaticAppBase : public IApplication {
   public:
-    StaticAppBase(const char* name, uint16_t stackSize, UBaseType_t priority, StackType_t* stackBuf)
-        : _taskInfo(name, stackSize, this, priority, stackBuf, &_staticTask) {
+    class IPCMsg {
+        public:
+        IPCMsg(){};
+        IPCMsg(void* pMsg, const uint16_t msgLen): pMsg(pMsg), msgLen(msgLen) {}
+        void* pMsg;
+        uint16_t msgLen;
+    };
 
+
+    /* 应用创建 */
+    StaticAppBase(bool enable, const char* name, uint16_t stackSize,StackType_t* stackBuf, UBaseType_t priority,  uint16_t msgQueueSize, uint8_t* queueBuf)
+        : _taskInfo(enable, name, stackSize, this, priority, &_tskHandle, stackBuf, &_staticTask), _staticTask() {
         /* event */
         _initEvent = xEventGroupCreateStatic(&_staticEventGroup);
 
+        /* queue */
+        if (queueBuf != nullptr || msgQueueSize != 0) {
+            _commQueue = xQueueCreateStatic(msgQueueSize, sizeof(IPCMsg), queueBuf, &_staticQueue);
+        }
+
         /* task */
         _registerThread(_taskInfo);
+
     }
 
     /**
      * @brief start all applications initialized.
      */
     static void startApplications() {
-        for (auto eachApp : _taskInfoRegistry) {
-
-            eachApp.tskHandle = xTaskCreateStatic(_taskEntry, eachApp.name, eachApp.stackSize, eachApp.pThread,
-                                                  eachApp.priority, eachApp.stackBuf, eachApp.pxTask);
+        for (auto& eachApp : _taskInfoRegistry) {
+            if (eachApp.enable) {
+                *(eachApp.pTskHandle) = xTaskCreateStatic(_taskEntry, eachApp.name, eachApp.stackSize, eachApp.pThread,
+                                                          eachApp.priority, eachApp.stackBuf, eachApp.pxTask);
+            }
         }
     }
 
@@ -132,29 +154,49 @@ class StaticAppBase : public IApplication {
     void waitInit() override { xEventGroupWaitBits(_initEvent, 0x01, pdFALSE, pdFALSE, portMAX_DELAY); }
 
 
+    virtual uint8_t rxMsg(void* msg, uint16_t size = 0) {
+        return 0;
+    }
+
+    virtual uint8_t rxMsg(void* msg, uint16_t size, TickType_t timeout) {
+        return 0;
+
+    }
+
+
+
 
     /************* setter & getter **************/
     [[nodiscard]] const char* getName() const override { return _taskInfo.name; }
 
-    [[nodiscard]] uint32_t getStackHighWaterMark() const override {
-        return uxTaskGetStackHighWaterMark(_taskInfo.tskHandle);
-    }
+    [[nodiscard]] uint32_t getStackHighWaterMark() const override { return uxTaskGetStackHighWaterMark(_tskHandle); }
 
-    [[nodiscard]] TaskHandle_t getTaskHandle() const override { return _taskInfo.tskHandle; }
+    [[nodiscard]] TaskHandle_t getTaskHandle() const override { return _tskHandle; }
 
     [[nodiscard]] float getRunTime() const override { return _runTime; }
 
   protected:
-    TaskInfo _taskInfo;
-    StaticEventGroup_t _staticEventGroup;
-    StaticTask_t _staticTask;
-    QueueHandle_t _queue;
-    StaticQueue_t _staticQueue;
-    float _runTime = 0;
+    TaskInfo _taskInfo;                   // 创建任务时候注册的任务信息
+    StaticEventGroup_t _staticEventGroup{}; // 静态事件组
+    TaskHandle_t _tskHandle = nullptr;    // 任务句柄
+    StaticTask_t _staticTask;             // 静态任务空间
+    QueueHandle_t _commQueue;                 // 进程通信队列句柄
+    StaticQueue_t _staticQueue{};           // 静态队列空间
+    float _runTime = 0;                   // 运行时间统计
+
+
 
   private:
+    /**
+     * @brief 注册任务
+     * @param taskInfo 任务信息
+     */
     static void _registerThread(const TaskInfo& taskInfo) { _taskInfoRegistry.push_back(taskInfo); }
 
+    /**
+     * @brief 所有的任务的入口函数
+     * @param pvParameters 参数指针
+     */
     [[noreturn]] static void _taskEntry(void* pvParameters) {
         auto* threadObj = static_cast<StaticAppBase*>(pvParameters);
         threadObj->init();
@@ -172,12 +214,8 @@ class StaticAppBase : public IApplication {
 
 
 
-
 /* ------- variables -------------------------------------------------------------------------------------------------*/
 
-extern StaticAppBase* _p_shell_thread;
-extern StaticAppBase* pFileThread;
-extern StaticAppBase* pConsoleThread;
 
 
 /* ------- function implement ----------------------------------------------------------------------------------------*/

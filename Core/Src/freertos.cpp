@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * File Name          : freertos.c
+ * File Name          : freertos.cpp
  * Description        : Code for freertos applications
  ******************************************************************************
  * @attention
@@ -67,8 +67,6 @@ void MX_FREERTOS_Init(void);
 
 void StartDefaultTask(void* argument);
 
-void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-
 /**
  * @brief  FreeRTOS initialization
  * @param  None
@@ -117,22 +115,19 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void* argument) {
     /* USER CODE BEGIN StartDefaultTask */
-    MX_USB_DEVICE_Init();
-    IGpio* g;
-    auto r = p_gpio_reg_fcty->produce(GpioPortEnum::GPIO_PORT_C, GpioPinEnum::GPIO_PIN_1_,
-                                      GpioModeEnum::GPIO_MODE_OUTPUT_PP_);
-    g      = std::get<IGpio*>(r);
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    GPIO_InitTypeDef GPIO_InitStruct = {
+        .Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2,
+        .Mode = GPIO_MODE_OUTPUT_PP,
+        .Pull = GPIO_NOPULL,
+        .Speed = GPIO_SPEED_FREQ_LOW,
+    };
 
-    auto s = g->enable();
-
-    if (s != GpioErrCode::GPIO_SUCCESS) {
-        while (true)
-            ;
-    }
-
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_SET);
     /* Infinite loop */
     for (;;) {
-        s = g->toggle();
+        //HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_1);
         vTaskDelay(100);
     }
     /* USER CODE END StartDefaultTask */

@@ -40,8 +40,6 @@ add_executable(${CMAKE_PROJECT_NAME}
         Drivers/Peripheral/GPIO/gpio-reg-impl.cpp
         Drivers/Peripheral/GPIO/gpio-lib-impl.cpp
         Core/Src/freertos.cpp
-        Applications/app-intf.h
-        Applications/app-shell.cpp
         Drivers/Communications/comm-intf.h
         Drivers/Communications/comm-uart-impl.cpp
         Drivers/Communications/comm-cdc-impl.cpp
@@ -52,7 +50,6 @@ add_executable(${CMAKE_PROJECT_NAME}
         Middlewares/Third_Party/LetterShell/shell_cpp.h
         Middlewares/Third_Party/LetterShell/log/log.h
         Middlewares/Third_Party/LetterShell/log.c
-        Applications/app-file.cpp
         Middlewares/Third_Party/LetterShell/game.c
         Middlewares/Third_Party/LetterShell/shell_cmd_group.c
         Middlewares/Third_Party/LetterShell/shell_passthrough.c
@@ -70,20 +67,17 @@ add_executable(${CMAKE_PROJECT_NAME}
         Drivers/Devices/w25qxx-inst.h
         Middlewares/Third_Party/LittleFs/lfs.c
         Middlewares/Third_Party/LittleFs/lfs_util.c
-        Adapters/adapter-lfs.cpp
-        Adapters/adapter-lfs.h
-        Applications/ShellCmd/cmd-normal.cpp
-        Applications/ShellCmd/cmd-normal.h
-        Applications/app-shell.h
-        Applications/ShellCmd/cmd-task.cpp
-        Applications/ShellCmd/cmd-task.h
-        Applications/app-file.h
-        Applications/ShellCmd/cmd-file.h
-        Applications/ShellCmd/cmd-file.cpp
-        Applications/app-console.h
-        Applications/app-console.cpp
-        Applications/Utils/ringbuffer.h
-        Applications/Utils/ringBuffer.cpp
+        Middlewares/Third_Party/LittleFs/Adapters/adapter-lfs.cpp
+        Middlewares/Third_Party/LittleFs/Adapters/adapter-lfs.h
+        Applications/app-host.cpp
+        Applications/app-fileSystem.cpp
+        Middlewares/Proto/proto-def-mek.h
+        Middlewares/Proto/proto-mek.cpp
+        Middlewares/Proto/proto-mek.h
+        Applications/Service/service_explorer.cpp
+        Applications/Service/service_explorer.h
+        Applications/Service/server-intf.h
+        Applications/app-mallocFailed.cpp
 )
 
 # Add STM32CubeMX generated sources
@@ -92,6 +86,7 @@ add_subdirectory(cmake/stm32cubemx)
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths
+        ./
 )
 
 # Add sources to executable

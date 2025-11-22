@@ -351,6 +351,7 @@ W25QxxErr W25Qxx::fastReadQuadOutput(uint32_t address, void* pData, uint16_t len
 
     const std::vector msgs = {inst, addr, data, dummy};
 
+
     /* 2. transmit messages */
 
     const auto ret         = _spiComm.receive(msgs);

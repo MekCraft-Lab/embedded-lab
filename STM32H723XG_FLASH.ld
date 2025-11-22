@@ -244,6 +244,14 @@ SECTIONS
     . = ALIGN(8);
   } >DTCMRAM
 
+  .dma_pool :
+  {
+    . = ALIGN(4);
+    _sdata = .;        /* create a global symbol at data start */
+    *(.dma_pool)           /* .data sections */
+    . = ALIGN(4);
+  } >RAM_D1
+
 
 
   /* Remove information from the standard libraries */
