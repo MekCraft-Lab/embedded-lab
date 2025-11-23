@@ -1,0 +1,3 @@
+[submodule "esp32/config"]
+	path = esp32/config
+	url = git@github.com:MekCraft-Lab/config.git
