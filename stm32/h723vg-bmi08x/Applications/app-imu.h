@@ -37,12 +37,15 @@
 #include "application-base.h"
 
 /* II. OS */
+#include "semphr.h"
 
 
 /* III. middlewares */
 
 
 /* IV. drivers */
+
+#include "../../Drivers/Device/dev-bmi.h"
 
 
 /* V. standard lib */
@@ -68,7 +71,7 @@ class ImuApp final : public StaticAppBase {
 
     uint8_t rxMsg(void* msg, uint16_t size = 0) override;
 
-    uint8_t rxMsg(void *msg, uint16_t size, TickType_t timeout)  override;
+    uint8_t rxMsg(void* msg, uint16_t size, TickType_t timeout) override;
 
     /************ setter & getter ***********/
     static ImuApp& instance();
@@ -76,18 +79,32 @@ class ImuApp final : public StaticAppBase {
 
   private:
     /* message interface */
-    
+
     // 1. message queue
-    
+
     // 2. mutex
-    
+
     // 3. semphr
-    
+    xSemaphoreHandle _waitForTransmit;
+    xSemaphoreHandle _waitForReceive;
+    xSemaphoreHandle _waitForTransmitReceive;
+
     // 4. notify
-    
+
     // 5. stream or message
-    
+
     // 6. event group
+
+    /* drivers */
+    Bmi088 _bmi088;
+
+    friend void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef* hspi);
+    friend void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef* hspi);
+    friend void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef* hspi);
+
+    friend bool waitForTransmit(uint32_t timeout);
+    friend bool waitForReceive(uint32_t timeout);
+    friend bool waitForTransmitReceive(uint32_t timeout );
 
 };
 #endif
@@ -97,7 +114,10 @@ class ImuApp final : public StaticAppBase {
 extern "C" {
 #endif
 
-    /* C Interface */
+/* C Interface */
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef* hspi);
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef* hspi);
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef* hspi);
 
 #ifdef __cplusplus
 }

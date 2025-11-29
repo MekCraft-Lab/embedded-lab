@@ -54,9 +54,12 @@ void UsageFault_Handler(void);
 void DebugMon_Handler(void);
 void DMA1_Stream0_IRQHandler(void);
 void DMA1_Stream1_IRQHandler(void);
+void DMA1_Stream2_IRQHandler(void);
+void DMA1_Stream3_IRQHandler(void);
 void TIM3_IRQHandler(void);
 void TIM4_IRQHandler(void);
 void SPI2_IRQHandler(void);
+void USART1_IRQHandler(void);
 void TIM24_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 

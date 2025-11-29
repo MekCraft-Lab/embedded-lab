@@ -76,6 +76,50 @@ enum class Bmi160Cmd : uint8_t {
     CMD          = 0x7E,
 };
 
+enum class Bmi088AccRegister : uint8_t {
+    ACC_CHIP_ID             = 0x00,
+    ACC_ERR_REG             = 0x02,
+    ACC_STATUS              = 0x03,
+    ACC_DATA                = 0x12,
+    SENSORTIME_DATA         = 0x18,
+    ACC_INT_STAT_1          = 0x1D,
+    TEMPERATURE_SENSOR_DATA = 0x22,
+    FIFO_LENGTH             = 0x24,
+    FIFO_DATA               = 0x26,
+    ACC_CONF                = 0x40,
+    ACC_RANGE               = 0x41,
+    FIFO_WTM                = 0x46,
+    FIFO_CONFIG_0           = 0x48,
+    FIFO_CONFIG_1           = 0x49,
+    INT1_IO_CONF            = 0x53,
+    INT2_IO_CONF            = 0x54,
+    INT1_INT2_MAP_DATA      = 0x58,
+    ACC_SELF_TEST           = 0x6D,
+    ACC_PWR_CONF            = 0x7C,
+    ACC_PWR_CTRL            = 0x7D,
+    ACC_SOFTRESET           = 0x7E
+};
+
+enum class Bmi088GyroRegister : uint8_t {
+    GYRO_CHIP_ID      = 0x00,
+    RATE_DATA         = 0x02,
+    GYRO_INT_STAT_1   = 0x0A,
+    FIFO_STATUS       = 0x0E,
+    GYRO_RANGE        = 0x0F,
+    GYRO_BANDWIDTH    = 0x10,
+    GYRO_LPM1         = 0x11,
+    GYRO_SOFTRESET    = 0x14,
+    GYRO_INT_CTRL     = 0x15,
+    INT3_INT4_IO_CONF = 0x16,
+    INT3_INT4_IO_MAP  = 0x18,
+    FIFO_WM_ENABLE    = 0x1E,
+    FIFO_EXT_INT_S    = 0x34,
+    GYRO_SELF_TEST    = 0x3C,
+    FIFO_CONFIG_0     = 0x3D,
+    FIFO_CONFIG_1     = 0x3E,
+    FIFO_DATA         = 0x3F
+};
+
 
 /*-------- 3. interface ----------------------------------------------------------------------------------------------*/
 

@@ -97,6 +97,7 @@ class IApplication {
     float _cpuUsage   = 0;
     float _stackUsage = 0;
     float _timeUsage  = 0;
+
 };
 
 
@@ -145,7 +146,7 @@ class StaticAppBase : public IApplication {
     /**
      * @brief set the initialization event
      */
-    void initEvent() override { xEventGroupSetBits(_initEvent, 0x01); }
+    void initEvent() override { xEventGroupSetBits(_initEvent, 0x01);}
 
     /**
      * @brief waiting for the initialization event of application
@@ -182,6 +183,7 @@ class StaticAppBase : public IApplication {
     QueueHandle_t _commQueue;               // 进程通信队列句柄
     StaticQueue_t _staticQueue{};           // 静态队列空间
     float _runTime = 0;                     // 运行时间统计
+    inline static uint8_t _inited = 0;
 
 
 
@@ -198,6 +200,7 @@ class StaticAppBase : public IApplication {
      */
     [[noreturn]] static void _taskEntry(void* pvParameters) {
         auto* threadObj = static_cast<StaticAppBase*>(pvParameters);
+        _inited = 1;
         threadObj->init();
         threadObj->initEvent();
         while (true) {

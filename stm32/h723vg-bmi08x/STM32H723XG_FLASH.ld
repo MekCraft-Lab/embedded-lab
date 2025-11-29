@@ -240,6 +240,12 @@ SECTIONS
     . = ALIGN(8);
   } >DTCMRAM
 
+  .dma_pool (NOLOAD) :
+  {
+    . = ALIGN(8);
+    *(.dma_pool*)
+  } >RAM_D1
+
 
 
   /* Remove information from the standard libraries */

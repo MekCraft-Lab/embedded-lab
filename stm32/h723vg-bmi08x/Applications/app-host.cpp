@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file    app-host.cpp.cpp
+ * @file    app-console.cpp
  * @brief   简要描述
  *******************************************************************************
  * @attention
@@ -14,7 +14,7 @@
  *
  *******************************************************************************
  * @author  MekLi
- * @date    2025/11/24
+ * @date    2025/8/21
  * @version 1.0
  *******************************************************************************
  */
@@ -33,13 +33,15 @@
 
 
 /* I. header */
-
 #include "app-host.h"
 
 /* II. other application */
 
 
 /* III. standard lib */
+#include <cstdio>
+#include <cstring>
+#include <cstdarg>
 
 
 
@@ -80,15 +82,19 @@ static HostApp hostApp;
 
 /* ------- message interface attribute -------------------------------------------------------------------------------*/
 
+#define STREAM_BUFFER_SIZE 1536
+
+static uint8_t sbStg[STREAM_BUFFER_SIZE];
 
 
-
+static __attribute__((section(".dma_pool"))) uint8_t txBuf[512];
+uint8_t frameBuildBuffer[512];
+uint8_t responseBuffer[512];
 
 
 /* ------- function prototypes ---------------------------------------------------------------------------------------*/
 
-
-
+void uartSend(void*, uint16_t);
 
 
 /* ------- function implement ----------------------------------------------------------------------------------------*/
@@ -96,34 +102,124 @@ static HostApp hostApp;
 
 HostApp::HostApp()
     : StaticAppBase(APPLICATION_ENABLE, APPLICATION_NAME, APPLICATION_STACK_SIZE,  appStack, APPLICATION_PRIORITY, 0, nullptr){
+
+    _sbHandle = xStreamBufferCreateStatic(STREAM_BUFFER_SIZE, 1, sbStg, &_stm);
 }
 
+void HostApp::init() {
+    /* driver object initialize */
+    _waitForTransmitLock = xSemaphoreCreateBinary();
+    println("host application start");
+}
+
+
+void HostApp::run() {
+    // 阻塞直到消息到来，先读取长度头（假设每条消息前有 2 字节长度）
+    uint16_t msg_len;
+    xStreamBufferReceive(_sbHandle, &msg_len, sizeof(msg_len), portMAX_DELAY);
+
+    // 然后动态申请缓冲区接收完整消息
+    // void *msg_buf = pvPortMalloc(msg_len);
+    xStreamBufferReceive(_sbHandle, txBuf, msg_len, portMAX_DELAY);
+    uartSend(txBuf, msg_len);
+    // vPortFree(msg_buf);
+    xSemaphoreTake(_waitForTransmitLock, portMAX_DELAY);
+
+}
+
+
+
+uint8_t HostApp::rxMsg(void* msg, uint16_t size) {
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xStreamBufferSendFromISR(_sbHandle, &size, 2, &xHigherPriorityTaskWoken);
+    xStreamBufferSendFromISR(_sbHandle, msg, size, &xHigherPriorityTaskWoken);
+
+    return 0;
+}
+
+bool HostApp::println(const char* fmt, ...) {
+    va_list vargs;
+    char formatBuf[512];
+
+    va_start(vargs, fmt);
+    uint16_t len = vsnprintf(formatBuf, 500, fmt, vargs);
+    va_end(vargs);
+
+    if (len > 500) {
+        len = 500;
+    }
+
+    formatBuf[len++] = '\r';
+    formatBuf[len++] = '\n';
+    formatBuf[len]   = 0;
+
+    bool ret         = rxMsg(formatBuf, len , portMAX_DELAY);
+    return ret;
+}
+
+bool HostApp::println(uint8_t ISR, const char* fmt, ...) {
+    va_list vargs;
+    char formatBuf[512];
+
+    va_start(vargs, fmt);
+    uint16_t len = vsnprintf(formatBuf, 500, fmt, vargs);
+    va_end(vargs);
+
+    if (len > 500) {
+        len = 500;
+    }
+
+    formatBuf[len++] = '\r';
+    formatBuf[len++] = '\n';
+    formatBuf[len]   = 0;
+
+   bool ret         = rxMsg(formatBuf, len);
+    return ret;
+}
+
+uint8_t HostApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) {
+    xStreamBufferSend(_sbHandle, &size, 2, timeout);
+    xStreamBufferSend(_sbHandle, msg, size, timeout);
+    return 0;
+}
 
 HostApp& HostApp::instance() {
     return hostApp;
 }
 
 
-void HostApp::init() {
-    /* driver object initialize */
+void uartSend(void* pData, uint16_t size) {
+    memcpy(txBuf, pData, size);
+    HAL_UART_Transmit_DMA(&huart1, txBuf, size);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
+    if (huart == &huart1) {
+        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+        xSemaphoreGiveFromISR(hostApp._waitForTransmitLock, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    }
 }
 
 
-void HostApp::run() {
- 
+
+extern "C" void hostPrintln(const char* fmt, ...) {
+    va_list vargs;
+    char formatBuf[512];
+
+    va_start(vargs, fmt);
+    uint16_t len = vsnprintf(formatBuf, 500, fmt, vargs);
+    va_end(vargs);
+
+    if (len > 500) {
+        len = 500;
+    }
+
+    formatBuf[len++] = '\r';
+    formatBuf[len++] = '\n';
+    formatBuf[len]   = 0;
+
+    hostApp.rxMsg(formatBuf, len, portMAX_DELAY);
+
 }
-
-
-
-uint8_t HostApp::rxMsg(void* msg, uint16_t size) {
-
-    return 0;
-}
-
-uint8_t HostApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) {
-
-    return 0;
-}
-
-
 

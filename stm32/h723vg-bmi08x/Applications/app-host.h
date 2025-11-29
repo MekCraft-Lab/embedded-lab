@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file    app-host.h
+ * @file    app-console.h
  * @brief   简要描述
  *******************************************************************************
  * @attention
@@ -14,7 +14,7 @@
  *
  *******************************************************************************
  * @author  MekLi
- * @date    2025/11/24
+ * @date    2025/8/26
  * @version 1.0
  *******************************************************************************
  */
@@ -22,31 +22,30 @@
 
 /* Define to prevent recursive inclusion -----------------------------------------------------------------------------*/
 
-#ifndef H723VG_BMI08X_APP_HOST_H
-#define H723VG_BMI08X_APP_HOST_H
+#ifndef __APP_HOST_H__
+#define __APP_HOST_H__
 
 
 
 
 /*-------- 1. includes and imports -----------------------------------------------------------------------------------*/
-
 #ifdef __cplusplus
 
 /* I. interface */
-
 #include "application-base.h"
 
 /* II. OS */
 
+#include "semphr.h"
+#include "stream_buffer.h"
 
 /* III. middlewares */
 
-
 /* IV. drivers */
-
+#include "usart.h"
 
 /* V. standard lib */
-
+#include <cstring>
 
 
 
@@ -68,6 +67,10 @@ class HostApp final : public StaticAppBase {
 
     uint8_t rxMsg(void* msg, uint16_t size = 0) override;
 
+    bool println(const char* str, ...);
+
+    bool println(uint8_t ISR, const char *fmt, ...);
+
     uint8_t rxMsg(void *msg, uint16_t size, TickType_t timeout)  override;
 
     /************ setter & getter ***********/
@@ -76,19 +79,12 @@ class HostApp final : public StaticAppBase {
 
   private:
     /* message interface */
-    
-    // 1. message queue
-    
-    // 2. mutex
-    
-    // 3. semphr
-    
-    // 4. notify
-    
-    // 5. stream or message
-    
-    // 6. event group
+    uint8_t _index;
+    StaticStreamBuffer_t _stm;
+    StreamBufferHandle_t _sbHandle;
+    xSemaphoreHandle _waitForTransmitLock;
 
+    friend void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 };
 #endif
 
@@ -96,9 +92,7 @@ class HostApp final : public StaticAppBase {
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-    /* C Interface */
-
+    void hostPrintln(const char* fmt, ...);
 #ifdef __cplusplus
 }
 #endif
