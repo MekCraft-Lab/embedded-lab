@@ -29,20 +29,23 @@
 
 /*-------- 1. includes and imports -----------------------------------------------------------------------------------*/
 
+#ifdef __cplusplus
 #include "drv-ili9481-cmd.h"
 #include "drv-ili9481-config.h"
-#include "fmc.h"
 
+#endif
 
 
 
 /*-------- 2. enum and define ----------------------------------------------------------------------------------------*/
 
+#ifdef __cplusplus
 enum class ILI9481_ERROR {
     NONE,
     OK,
     PARAM_ERR,
 };
+#endif
 
 
 #define REG_ADDR  0x60000000
@@ -50,7 +53,6 @@ enum class ILI9481_ERROR {
 
 /*-------- 3. interface ----------------------------------------------------------------------------------------------*/
 
-using delayFunc = void (*)(uint32_t);
 
 #define __WRITE_REG(x)  *(__IO uint16_t*)REG_ADDR = (uint16_t)x;
 
@@ -63,19 +65,25 @@ using delayFunc = void (*)(uint32_t);
 
 
 
+#ifdef __cplusplus
+using delayFunc = void (*)(uint32_t);
+
 
 class ILI9481 {
-  public:
+public:
     ILI9481(delayFunc);
-    ILI9481_ERROR init();
-    ILI9481_ERROR test();
+    static ILI9481_ERROR init();
+    static ILI9481_ERROR test();
     static ILI9481_ERROR fillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
-    inline void drawPixel(uint16_t x, uint16_t y, uint16_t color);
+    static void drawPixel(uint16_t x, uint16_t y, uint16_t color);
 
 
-  private:
-    delayFunc _delayMs = nullptr;
+private:
+    inline static delayFunc _delayMs = nullptr;
 };
+
+#endif
+
 
 
 /*-------- 4. decorator ----------------------------------------------------------------------------------------------*/

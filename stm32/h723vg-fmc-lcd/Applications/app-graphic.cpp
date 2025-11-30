@@ -52,7 +52,6 @@
 
 /* ------- class prototypes-------------------------------------------------------------------------------------------*/
 
-static void delayMs(uint32_t ms);
 
 
 
@@ -72,7 +71,7 @@ static void delayMs(uint32_t ms);
 
 /* ------- variables -------------------------------------------------------------------------------------------------*/
 
-static ILI9481 lcd(delayMs);
+static ILI9481 lcd(GraphicApp::delayMs);
 
 uint32_t exec_time_us;
 
@@ -128,6 +127,12 @@ void GraphicApp::init() {
     lcd.init();
 
     host.println("发送320x480x2个Byte执行时间：%d us, 折合%d MB/s", exec_time_us, (320 * 480 * 2) / exec_time_us );
+
+    lcd.fillRect(159, 239, 160, 240, 0xdddd);
+
+    vTaskDelay(5000);
+
+    lcd.fillRect(0, 0, 100, 40, 0x8C48);
 }
 
 
@@ -144,4 +149,4 @@ uint8_t GraphicApp::rxMsg(void* msg, uint16_t size) { return 0; }
 uint8_t GraphicApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) { return 0; }
 
 
-static void delayMs(uint32_t ms) { vTaskDelay(ms); }
+void GraphicApp::delayMs(uint32_t ms) { vTaskDelay(ms); }

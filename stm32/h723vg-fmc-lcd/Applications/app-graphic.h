@@ -72,6 +72,8 @@ class GraphicApp final : public StaticAppBase {
     /************ setter & getter ***********/
     static GraphicApp& instance();
 
+    static void delayMs(uint32_t ms);
+
 
   private:
     /* message interface */

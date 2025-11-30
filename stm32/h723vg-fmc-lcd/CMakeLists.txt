@@ -51,10 +51,17 @@ add_executable(${CMAKE_PROJECT_NAME}
         Drivers/Devices/ILI9481/drv-ili9481.h
         Drivers/Devices/ILI9481/drv-ili9481.cpp
         Drivers/Devices/ILI9481/drv-ili9481-config.h
+        Middlewares/Third_Party/lvgl/lvgl.h
+        Drivers/Devices/ILI9481/drv-ili9481-lvgl-adaptor.cpp
+        Drivers/Devices/ILI9481/drv-ili9481-lvgl-adaptor.h
 )
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
+
+# 添加LVGL
+add_subdirectory(Middlewares/Third_Party/lvgl)
+set(CONFIG_LV_BUILD_DEMOS ON)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE

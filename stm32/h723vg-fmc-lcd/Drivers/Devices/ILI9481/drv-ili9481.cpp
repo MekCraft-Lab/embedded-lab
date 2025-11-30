@@ -49,8 +49,8 @@
 const uint8_t powerSettingParam[]    = {0x07, 0x42, 0x18};
 const uint8_t vcomSettingParam[]     = {0x00, 0x18, 0x04};
 const uint8_t normalModePowerParam[] = {0x01, 0x02};
-const uint8_t panelDrivingParam[]    = {SCAN_MODE << 2 | GRAYSCALE_INVERSION << 4, DISPLAY_LINES / 8 - 1, 0x00, 0x02,
-                                        0x11};
+const uint8_t panelDrivingParam[]    = {SCAN_MODE << 2 | GRAYSCALE_INVERSION << 4, DISPLAY_LINES / 8 - 1, 00, 0x02,
+                                        0x00};
 const uint8_t frameRateParame[]      = {SCAN_FPS};
 const uint8_t gammaParam[]           = {0x00, 0x32, 0x36, 0x45, 0x06, 0x16, 0x37, 0x75, 0x77, 0x54, 0x0C, 0x00};
 const uint8_t columnAddr[]           = __START_AND_END_TO_BYTE_ARRAY(0, 320);
@@ -59,7 +59,12 @@ const uint8_t pageAddr[]             = __START_AND_END_TO_BYTE_ARRAY(0, 480);
 extern uint32_t exec_time_us;
 /* ------- function implement ----------------------------------------------------------------------------------------*/
 
-ILI9481::ILI9481(delayFunc delayMs) : _delayMs(delayMs) {}
+ILI9481::ILI9481(delayFunc delayMs) {
+    if (delayMs != nullptr) {
+        _delayMs = delayMs;
+    }
+
+}
 
 static inline void FMC_Write16(uint32_t addr, uint16_t data) {
     __asm volatile(
@@ -140,7 +145,7 @@ ILI9481_ERROR ILI9481::init() {
     __WRITE_REG(ILI9481_CMD::WRITE_MEM_START)
     for (uint32_t i = 0; i < 320 * 480; i++) {
 
-        __WRITE_DATA( i);
+        __WRITE_DATA( i );
 
     }
     exec_time_us = TIM24->CNT - exec_time_us;

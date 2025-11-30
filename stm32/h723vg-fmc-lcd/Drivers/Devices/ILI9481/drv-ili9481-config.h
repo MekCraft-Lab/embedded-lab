@@ -65,7 +65,7 @@
 
 
 
-#define GRAYSCALE_INVERSION        0x01
+#define GRAYSCALE_INVERSION        0x00
 #define SCAN_MODE                  SCAN_FROM_TOP_TO_BOTTOM
 #define DISPLAY_LINES              480
 #define SCAN_FPS                   FRAME_RATE_42HZ
