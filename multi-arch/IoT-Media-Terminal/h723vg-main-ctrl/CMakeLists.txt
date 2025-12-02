@@ -34,7 +34,26 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 enable_language(C ASM)
 
 # Create an executable object type
-add_executable(${CMAKE_PROJECT_NAME})
+add_executable(${CMAKE_PROJECT_NAME}
+        User/Applications/user-zone-entry.cpp
+        User/Applications/user-zone-entry.h
+        User/Applications/Service/service_explorer.cpp
+        User/Applications/app-fileSystem.cpp
+        User/Applications/app-host.cpp
+        User/Applications/app-mallocFailed.cpp
+        User/Applications/app-stackOverflow.cpp
+        User/Drivers/Devices/W25Qxx/w25qxx.cpp
+        User/Drivers/Devices/W25Qxx/w25qxx-comm-adpter.cpp
+        User/Middlewares/LittleFs/Adapters/adapter-lfs.cpp
+        User/Middlewares/LittleFs/lfs.c
+        User/Middlewares/LittleFs/lfs_util.c
+        User/Middlewares/Proto/proto-mek.cpp
+        User/Drivers/Devices/ILI9481/drv-ili9481.cpp
+        User/Drivers/Devices/ILI9481/drv-ili9481-lvgl-adaptor.cpp
+        User/Applications/app-graphic.cpp
+        User/Applications/app-createTimer.cpp
+        User/Middlewares/lvgl/lv_port_disp.c
+        User/Applications/app-wirelessComm.cpp)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -52,6 +71,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+        "${CMAKE_CURRENT_LIST_DIR}"
+        "${CMAKE_CURRENT_LIST_DIR}/User"
 )
 
 # Add project symbols (macros)
@@ -62,9 +83,13 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 # Remove wrong libob.a library dependency when using cpp files
 list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 
+#添加LVGL库
+add_subdirectory(User/Middlewares/lvgl)
+
+
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
-
+    lvgl
     # Add user defined libraries
 )

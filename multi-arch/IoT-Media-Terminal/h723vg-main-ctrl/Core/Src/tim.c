@@ -156,7 +156,7 @@ void MX_TIM24_Init(void)
 
   /* USER CODE END TIM24_Init 1 */
   htim24.Instance = TIM24;
-  htim24.Init.Prescaler = 0;
+  htim24.Init.Prescaler = 274;
   htim24.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim24.Init.Period = 4294967295;
   htim24.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;

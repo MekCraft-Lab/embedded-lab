@@ -240,14 +240,21 @@ SECTIONS
     . = ALIGN(8);
   } >DTCMRAM
 
-  ._dma_zone (NOLOAD) :
+  ._dma_pool (NOLOAD) :
   {
     . = ALIGN(4);
-    *(._dma_zone);
-    *(._dma_zone*);
+    *(._dma_pool*);
+    *(._dma_pool);
     . = ALIGN(4);
   } > RAM_D1
 
+  ._graphic_buffer (NOLOAD) :
+  {
+    . = ALIGN(4);
+    *(._graphic_buffer);
+    *(._graphic_buffer*);
+    . = ALIGN(4);
+  } >RAM_D1
 
 
   /* Remove information from the standard libraries */
