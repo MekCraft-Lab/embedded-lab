@@ -161,7 +161,7 @@ int LfsAdapter::erase(const struct lfs_config* c, lfs_block_t block) {
     }
 
     if (xSemaphoreTake(_waitForCmd, 10000) != pdTRUE) {
-        return LFS_ERR_IO;
+        return LFS_ERR_IO;85
     }
     for (uint16_t i = 0; i < 0xFFF; i++);
     _w25qxx->asyncWaitForFlag(W25QxxStateEnum::FREE);
