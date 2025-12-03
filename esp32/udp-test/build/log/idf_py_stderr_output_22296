@@ -1,0 +1,11 @@
+Command: C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\env\Espressif\frameworks\esp-idf-v5.5.1\tools/idf_monitor.py -p COM26 -b 115200 --toolchain-prefix riscv32-esp-elf- --target esp32c6 --revision 0 --decode-panic backtrace D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\udp-test.elf D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\bootloader\bootloader.elf --force-color -m 'C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\env\Espressif\frameworks\esp-idf-v5.5.1\tools\idf.py' '-B'
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM26 instead...[0m
+[0;33m--- esp-idf-monitor 1.8.0 on \\.\COM26 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- Connection to \\.\COM26 failed. Available ports:
+--- COM4
+--- COM23
+--- COM3
+--- COM22[0m
+[0m

@@ -1,0 +1,2560 @@
+Command: C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\env\Espressif\frameworks\esp-idf-v5.5.1\tools/idf_monitor.py -p COM26 -b 115200 --toolchain-prefix riscv32-esp-elf- --target esp32c6 --revision 0 --decode-panic backtrace D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\udp-test.elf D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\bootloader\bootloader.elf --force-color -m 'C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\env\Espressif\frameworks\esp-idf-v5.5.1\tools\idf.py' '-B'
+ESP-ROM:esp32c6-20220919
+Build:Sep 19 2022
+rst:0x15 (USB_UART_HPSYS),boot:0x2e (SPI_FAST_FLASH_BOOT)
+Saved PC:0x42007cfa
+PIWP:0xee
+mode:DIO, clock div:2
+load:0x40875730,len:0x1744
+load:0x4086b910,len:0xe78
+load:0x4086e610,len:0x31c8
+entry 0x4086b91a
+[0;32mI (23) boot: ESP-IDF v5.5.1-dirty 2nd stage bootloader[0m
+[0;32mI (23) boot: compile time Dec  3 2025 01:55:47[0m
+[0;32mI (24) boot: chip revision: v0.2[0m
+[0;32mI (24) boot: efuse block revision: v0.3[0m
+[0;32mI (27) boot.esp32c6: SPI Speed      : 80MHz[0m
+[0;32mI (31) boot.esp32c6: SPI Mode       : DIO[0m
+[0;32mI (35) boot.esp32c6: SPI Flash Size : 2MB[0m
+[0;32mI (38) boot: Enabling RNG early entropy source...[0m
+[0;32mI (43) boot: Partition Table:[0m
+[0;32mI (45) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (52) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (58) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (65) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (71) boot: End of partition table[0m
+[0;32mI (75) esp_image: segment 0: paddr=00010020 vaddr=420a0020 size=1dcd0h (122064) map[0m
+[0;32mI (105) esp_image: segment 1: paddr=0002dcf8 vaddr=40800000 size=02320h (  8992) load[0m
+[0;32mI (108) esp_image: segment 2: paddr=00030020 vaddr=42000020 size=9ed98h (650648) map[0m
+[0;32mI (231) esp_image: segment 3: paddr=000cedc0 vaddr=40802320 size=1c550h (116048) load[0m
+[0;32mI (262) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (262) boot: Disabling RNG early entropy source...[0m
+[0;32mI (272) cpu_start: Unicore app[0m
+[0;32mI (281) cpu_start: Pro cpu start user code[0m
+[0;32mI (281) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (281) app_init: Application information:[0m
+[0;32mI (281) app_init: Project name:     udp-test[0m
+[0;32mI (285) app_init: App version:      b1c5fbb-dirty[0m
+[0;32mI (289) app_init: Compile time:     Dec  3 2025 01:55:26[0m
+[0;32mI (294) app_init: ELF file SHA256:  21700d37a...[0m
+[0;32mI (298) app_init: ESP-IDF:          v5.5.1-dirty[0m
+[0;32mI (303) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (307) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (311) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (315) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (321) heap_init: At 40824590 len 00058080 (352 KiB): RAM[0m
+[0;32mI (326) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM[0m
+[0;32mI (331) heap_init: At 50000000 len 00003FE8 (15 KiB): RTCRAM[0m
+[0;32mI (337) spi_flash: detected chip: gd[0m
+[0;32mI (340) spi_flash: flash io: dio[0m
+[0;33mW (343) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (355) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (361) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (368) coexist: coex firmware version: b0bcc39[0m
+[0;32mI (372) coexist: coexist rom version 5b8dcfa[0m
+[0;32mI (376) main_task: Started on CPU0[0m
+[0;32mI (376) main_task: Calling app_main()[0m
+[0;32mI (396) pp: pp rom version: 5b8dcfa[0m
+[0;32mI (396) net80211: net80211 rom version: 5b8dcfa[0m
+[0;32mI (406) wifi:wifi driver task: 4082ac94, prio:23, stack:6656, core=0[0m
+[0;32mI (416) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (416) wifi:wifi certification version: v7.0[0m
+[0;32mI (416) wifi:config NVS flash: enabled[0m
+[0;32mI (416) wifi:config nano formatting: disabled[0m
+[0;32mI (416) wifi:mac_version:HAL_MAC_ESP32AX_761,ut_version:N, band mode:0x1[0m
+[0;32mI (426) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (426) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (436) wifi:Init management short buffer num: 32[0m
+[0;32mI (436) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (436) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (446) wifi:Init static rx buffer size: 1700 (rxctrl:92, csi:512)[0m
+[0;32mI (446) wifi:Init static rx buffer num: 10[0m
+[0;32mI (456) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (456) wifi_init: rx ba win: 6[0m
+[0;32mI (456) wifi_init: accept mbox: 6[0m
+[0;32mI (466) wifi_init: tcpip mbox: 32[0m
+[0;32mI (466) wifi_init: udp mbox: 6[0m
+[0;32mI (466) wifi_init: tcp mbox: 6[0m
+[0;32mI (476) wifi_init: tcp tx win: 5760[0m
+[0;32mI (476) wifi_init: tcp rx win: 5760[0m
+[0;32mI (476) wifi_init: tcp mss: 1440[0m
+[0;32mI (476) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (486) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (486) wifi_init: WiFi SLP IRAM OP enabled[0m
+[0;33mW (496) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (506) phy_init: phy_version 341,a6c8fe6,Jul 30 2025,18:34:11[0m
+[0;33mW (596) wifi:ACK_TAB0   :0x   90a0b, QAM16:0x9 (24Mbps), QPSK:0xa (12Mbps), BPSK:0xb (6Mbps)[0m
+[0;33mW (596) wifi:CTS_TAB0   :0x   90a0b, QAM16:0x9 (24Mbps), QPSK:0xa (12Mbps), BPSK:0xb (6Mbps)[0m
+[0;33mW (596) wifi:(agc)0x600a7128:0xd2067a3e, min.avgNF:0xce->0xd2(dB), RCalCount:0x67, min.RRssi:0xa3e(-92.12)[0m
+[0;32mI (606) wifi:11ax coex: WDEVAX_PTI0(0x55777555), WDEVAX_PTI1(0x00003377).[0m
+
+[0;32mI (616) wifi:mode : sta (58:8c:81:3c:69:34)[0m
+[0;32mI (616) wifi:enable tsf[0m
+[0;32mI (626) mdns_mem: mDNS task will be created from internal RAM[0m
+UDP server listening on port 12345
+[0;32mI (636) wifi:new:<1,0>, old:<1,0>, ap:<255,255>, sta:<1,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (636) wifi:(connect)dot11_authmode:0x3, pairwise_cipher:0x3, group_cipher:0x3[0m
+[0;32mI (646) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (646) main_task: Returned from app_main()[0m
+[0;32mI (656) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (656) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (656) wifi:(trc)phytype:CBW20-SGI, snr:60, maxRate:144, highestRateIdx:0[0m
+[0;33mW (666) wifi:(trc)band:2G, phymode:3, highestRateIdx:0, lowestRateIdx:11, dataSchedTableSize:14[0m
+[0;32mI (676) wifi:(trc)band:2G, rate(S-MCS7, rateIdx:0), ampdu(rate:S-MCS7, schedIdx(0, stop:8)), snr:60, ampduState:wait operational[0m
+[0;32mI (686) wifi:ifidx:0, rssi:-33, nf:-93, phytype(0x3, CBW20-SGI), phymode(0x3, 11bgn), max_rate:144, he:0, vht:0, ht:1[0m
+[0;32mI (696) wifi:(ht)max.RxAMPDULenExponent:3(65535 bytes), MMSS:6(8 us)[0m
+[0;32mI (706) wifi:connected with Ciallo～(∠・ω< )⌒★, aid = 2, channel 1, BW20, bssid = 24:69:68:3a:79:ac[0m
+[0;32mI (716) wifi:security: WPA2-PSK, phy:bgn, rssi:-33, cipher(pairwise:0x3, group:0x3), pmf:0, [0m
+[0;32mI (716) wifi:pm start, type: 1, twt_start:0[0m
+
+[0;32mI (726) wifi:pm start, type:1, aid:0x2, trans-BSSID:24:69:68:3a:79:ac, BSSID[5]:0xac, mbssid(max-indicator:0, index:0), he:0[0m
+[0;32mI (736) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (746) wifi:set rx beacon pti, rx_bcn_pti: 10, bcn_timeout: 25000, mt_pti: 10, mt_time: 10000[0m
+[0;32mI (746) wifi:[ADDBA]TX addba request, tid:0, dialogtoken:1, bufsize:64, A-MSDU:0(not supported), policy:1(IMR), ssn:0(0x0)[0m
+[0;32mI (766) wifi:[ADDBA]TX addba request, tid:7, dialogtoken:2, bufsize:64, A-MSDU:0(not supported), policy:1(IMR), ssn:0(0x20)[0m
+[0;32mI (776) wifi:[ADDBA]TX addba request, tid:5, dialogtoken:3, bufsize:64, A-MSDU:0(not supported), policy:1(IMR), ssn:0(0x0)[0m
+[0;32mI (786) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (786) wifi:[ADDBA]RX addba response, status:0, tid:0/tb:1(0xa1), bufsize:64, batimeout:0, txa_wnd:64[0m
+[0;32mI (796) wifi:[ADDBA]RX addba response, status:0, tid:7/tb:1(0xa1), bufsize:64, batimeout:0, txa_wnd:64[0m
+[0;32mI (806) wifi:[ADDBA]RX addba response, status:0, tid:5/tb:1(0xa1), bufsize:64, batimeout:0, txa_wnd:64[0m
+[0;33mW (826) wifi:<ba-add>idx:0, ifx:0, tid:0, TAHI:0x100ac79, TALO:0x3a686924, (ssn:0, win:64, cur_ssn:0), CONF:0xc0000005[0m
+[0;32mI (2266) esp_netif_handlers: sta ip: 192.168.28.29, mask: 255.255.255.0, gw: 192.168.28.1[0m
+Got IP: 192.168.28.29
+[1;31mE (8196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+iled: 258
+[1;31mE (18226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18946) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (18986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19916) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (19926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20216) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20666) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20666) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20946) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (20996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21666) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (21996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22216) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22216) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22666) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22916) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22916) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (22926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23216) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23666) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+mit failed: 258
+[1;31mE (23966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (23996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+[1;31mE (24256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (24996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (25836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+[1;31mE (26026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26666) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (26776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27916) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (27996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (28886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+
+[1;31mE (29276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29666) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29946) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (29996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30216) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30616) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30916) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (30956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31196) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31646) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31756) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (31906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32126) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32216) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32556) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32606) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32636) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32656) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32766) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32776) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32906) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32916) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (32976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33176) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33426) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+ransmit failed: 258
+[1;31mE (33566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33576) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33676) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33686) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33696) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33706) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33716) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33736) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33946) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33966) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33986) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (33996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34236) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34276) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34296) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34326) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34346) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34366) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34396) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34446) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34786) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34796) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34806) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34816) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34826) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34866) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34976) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (34996) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35016) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35076) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35086) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35156) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35166) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35216) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35256) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35266) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35286) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35306) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35316) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35336) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35356) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35376) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35386) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35406) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35416) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35436) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35566) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35586) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35596) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35626) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35726) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35746) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35836) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35846) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35856) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35876) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35886) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35896) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35916) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35926) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35936) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35946) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (35956) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36006) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36026) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36036) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36046) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36056) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36066) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36096) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36106) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36116) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36136) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36146) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36186) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36206) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36226) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36246) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36456) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36466) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36476) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36486) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36496) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36506) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36516) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36526) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36536) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258
+[1;31mE (36546) spi_master: check_trans_valid(1083): invalid dev handle[0m
+SPI transmit failed: 258

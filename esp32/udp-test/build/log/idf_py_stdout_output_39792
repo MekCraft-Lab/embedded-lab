@@ -1,0 +1,55 @@
+Command: ninja all
+[1/9] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/udp-test.c.obj
+D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/main/udp-test.c: In function 'udp_receive_task':
+D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/main/udp-test.c:151:22: warning: unused variable 'y' [-Wunused-variable]
+  151 |             uint16_t y = (rx_buffer[2] << 8) | rx_buffer[3];
+      |                      ^
+D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/main/udp-test.c:150:22: warning: unused variable 'x' [-Wunused-variable]
+  150 |             uint16_t x = (rx_buffer[0] << 8) | rx_buffer[1];
+      |                      ^
+[2/9] Linking C static library esp-idf\main\libmain.a
+[3/9] Performing build step for 'bootloader'
+[0/1] Re-running CMake...
+-- Minimal build - OFF
+-- Building ESP-IDF components for target esp32c6
+-- Project sdkconfig file D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/sdkconfig
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/riscv/ld/rom.api.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/soc/esp32c6/ld/esp32c6.peripherals.ld
+-- Bootloader project name: "bootloader" version: 1
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.api.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.rvfp.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.wdt.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.systimer.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.version.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.libc.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.libc-suboptimal_for_misaligned_mem.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.newlib.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/main/ld/esp32c6/bootloader.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/main/ld/esp32c6/bootloader.rom.ld
+-- Components: bootloader bootloader_support efuse esp_app_format esp_bootloader_format esp_common esp_hw_support esp_rom esp_security esp_system esp_tee esptool_py freertos hal log main micro-ecc newlib partition_table riscv soc spi_flash
+-- Component paths: C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader_support C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/efuse C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_app_format C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_bootloader_format C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_common C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_hw_support C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_security C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_system C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_tee C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esptool_py C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/freertos C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/hal C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/log C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/main C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/components/micro-ecc C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/newlib C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/riscv C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/soc C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/spi_flash
+-- Configuring done (8.6s)
+-- Generating done (0.2s)
+-- Build files have been written to: D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/bootloader
+[1/4] Linking C executable bootloader.elf
+[2/4] Generating binary image from built executable
+esptool.py v4.10.0
+Creating esp32c6 image...
+Merged 2 ELF sections
+Successfully created esp32c6 image.
+Generated D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/bootloader/bootloader.bin
+[3/4] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\bootloader\esp-idf\esptool_py && C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/bootloader/bootloader.bin"
+Bootloader binary size 0x57e0 bytes. 0x2820 bytes (31%) free.
+[4/9] No install step for 'bootloader'
+[5/9] Completed 'bootloader'
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+[7/9] Linking CXX executable udp-test.elf
+[8/9] Generating binary image from built executable
+esptool.py v4.10.0
+Creating esp32c6 image...
+Merged 2 ELF sections
+Successfully created esp32c6 image.
+Generated D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/udp-test.bin
+[9/9] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\esp-idf\esptool_py && C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/partition_table/partition-table.bin D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/udp-test.bin"
+udp-test.bin binary size 0xdb340 bytes. Smallest app partition is 0x100000 bytes. 0x24cc0 bytes (14%) free.

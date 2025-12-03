@@ -1,0 +1,2 @@
+source D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/gdbinit/symbols
+source D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/gdbinit/connect

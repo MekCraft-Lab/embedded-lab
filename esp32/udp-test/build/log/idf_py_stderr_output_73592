@@ -1,0 +1,10 @@
+Command: C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\env\Espressif\frameworks\esp-idf-v5.5.1\tools/idf_monitor.py -p COM26 -b 115200 --toolchain-prefix riscv32-esp-elf- --target esp32c6 --revision 0 --decode-panic backtrace D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\udp-test.elf D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\bootloader\bootloader.elf --force-color -m 'C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\env\Espressif\frameworks\esp-idf-v5.5.1\tools\idf.py' '-B'
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM26 instead...[0m
+[0;33m--- esp-idf-monitor 1.8.0 on \\.\COM26 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0m--- 0x42007cfa: [0;33muart_tx_char[0m[0m at [0;32mC:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_driver_uart/src/uart_vfs.c[0m[0m:[1;31m190[0m
+[0m--- 0x4086b910: [0;33mesp_bootloader_get_description[0m[0m at [0;32mC:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x4086e610: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32mC:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x4086b91a: [0;33mcall_start_cpu0[0m[0m at [0;32mC:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m25[0m
+[0m

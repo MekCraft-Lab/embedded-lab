@@ -1,0 +1,109 @@
+Command: ninja flash
+[1/10] Building C object esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj
+[2/10] Linking C static library esp-idf\esp_app_format\libesp_app_format.a
+[3/10] Performing build step for 'bootloader'
+[0/1] Re-running CMake...
+-- Minimal build - OFF
+-- Building ESP-IDF components for target esp32c6
+-- Project sdkconfig file D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/sdkconfig
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/riscv/ld/rom.api.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/soc/esp32c6/ld/esp32c6.peripherals.ld
+-- Bootloader project name: "bootloader" version: 1
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.api.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.rvfp.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.wdt.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.systimer.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.version.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.libc.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.libc-suboptimal_for_misaligned_mem.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom/esp32c6/ld/esp32c6.rom.newlib.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/main/ld/esp32c6/bootloader.ld
+-- Adding linker script C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/main/ld/esp32c6/bootloader.rom.ld
+-- Components: bootloader bootloader_support efuse esp_app_format esp_bootloader_format esp_common esp_hw_support esp_rom esp_security esp_system esp_tee esptool_py freertos hal log main micro-ecc newlib partition_table riscv soc spi_flash
+-- Component paths: C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader_support C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/efuse C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_app_format C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_bootloader_format C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_common C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_hw_support C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_rom C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_security C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_system C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esp_tee C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esptool_py C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/freertos C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/hal C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/log C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/main C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/bootloader/subproject/components/micro-ecc C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/newlib C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/riscv C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/soc C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/spi_flash
+-- Configuring done (6.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/bootloader
+[1/2] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\bootloader\esp-idf\esptool_py && C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/bootloader/bootloader.bin"
+Bootloader binary size 0x57e0 bytes. 0x2820 bytes (31%) free.
+[4/10] No install step for 'bootloader'
+[5/10] Completed 'bootloader'
+[6/10] Generating esp-idf/esp_system/ld/sections.ld
+[7/10] Linking CXX executable udp-test.elf
+[8/10] Generating binary image from built executable
+esptool.py v4.10.0
+Creating esp32c6 image...
+Merged 1 ELF section
+Successfully created esp32c6 image.
+Generated D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/udp-test.bin
+[9/10] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\Program\MekCraft-Labs\embedded-lab\esp32\udp-test\build\esp-idf\esptool_py && C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/partition_table/partition-table.bin D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build/udp-test.bin"
+udp-test.bin binary size 0xdfc30 bytes. Smallest app partition is 0x100000 bytes. 0x203d0 bytes (13%) free.
+[9/10] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\env\Espressif\frameworks\esp-idf-v5.5.1\components\esptool_py && "C:\Software\JetBrains\CLion 2025.1.4\bin\cmake\win\x64\bin\cmake.exe" -D IDF_PATH=C:/env/Espressif/frameworks/esp-idf-v5.5.1 -D SERIAL_TOOL=C:/env/Espressif/python_env/idf5.5_py3.11_env/Scripts/python.exe;;C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esptool_py/esptool/esptool.py;--chip;esp32c6 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=D:/Program/MekCraft-Labs/embedded-lab/esp32/udp-test/build -P C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esptool_py/run_serial_tool.cmake"
+esptool.py --chip esp32c6 -p COM24 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 2MB 0x0 bootloader/bootloader.bin 0x10000 udp-test.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.10.0
+Serial port COM24
+Connecting....
+Chip is ESP32-C6 (QFN40) (revision v0.2)
+Features: WiFi 6, BT 5, IEEE802.15.4
+Crystal is 40MHz
+MAC: 58:8c:81:ff:fe:3c:69:34
+BASE MAC: 58:8c:81:3c:69:34
+MAC_EXT: ff:fe
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x000effff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 22496 bytes to 13912...
+Writing at 0x00000000... (100 %)
+Wrote 22496 bytes (13912 compressed) at 0x00000000 in 0.6 seconds (effective 286.7 kbit/s)...
+Hash of data verified.
+Compressed 916528 bytes to 531953...
+Writing at 0x00010000... (3 %)
+Writing at 0x0001c9c1... (6 %)
+Writing at 0x00025b28... (9 %)
+Writing at 0x0002fad0... (12 %)
+Writing at 0x00036c92... (15 %)
+Writing at 0x0003e091... (18 %)
+Writing at 0x00044c44... (21 %)
+Writing at 0x0004c241... (24 %)
+Writing at 0x00052e28... (27 %)
+Writing at 0x00059f6f... (30 %)
+Writing at 0x00060eb8... (33 %)
+Writing at 0x0006816c... (36 %)
+Writing at 0x0006ed32... (39 %)
+Writing at 0x00075483... (42 %)
+Writing at 0x0007bee7... (45 %)
+Writing at 0x0008217a... (48 %)
+Writing at 0x00087c65... (51 %)
+Writing at 0x0008df02... (54 %)
+Writing at 0x0009443c... (57 %)
+Writing at 0x0009a52f... (60 %)
+Writing at 0x000a058d... (63 %)
+Writing at 0x000a6594... (66 %)
+Writing at 0x000ac525... (69 %)
+Writing at 0x000b26f8... (72 %)
+Writing at 0x000b8973... (75 %)
+Writing at 0x000bed6e... (78 %)
+Writing at 0x000c52ff... (81 %)
+Writing at 0x000cb019... (84 %)
+Writing at 0x000d1dbc... (87 %)
+Writing at 0x000d85cb... (90 %)
+Writing at 0x000df349... (93 %)
+Writing at 0x000e4cea... (96 %)
+Writing at 0x000ead02... (100 %)
+Wrote 916528 bytes (531953 compressed) at 0x00010000 in 12.8 seconds (effective 573.7 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 103...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.1 seconds (effective 478.9 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
