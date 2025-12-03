@@ -29,7 +29,6 @@ SPI_HandleTypeDef hspi2;
 DMA_HandleTypeDef hdma_spi1_rx;
 DMA_HandleTypeDef hdma_spi1_tx;
 DMA_HandleTypeDef hdma_spi2_rx;
-DMA_HandleTypeDef hdma_spi2_tx;
 
 /* SPI1 init function */
 void MX_SPI1_Init(void)
@@ -85,18 +84,17 @@ void MX_SPI2_Init(void)
 
   /* USER CODE END SPI2_Init 1 */
   hspi2.Instance = SPI2;
-  hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.Mode = SPI_MODE_SLAVE;
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES_RXONLY;
   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+  hspi2.Init.NSS = SPI_NSS_HARD_INPUT;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
   hspi2.Init.CRCPolynomial = 0x0;
-  hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  hspi2.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
   hspi2.Init.NSSPolarity = SPI_NSS_POLARITY_LOW;
   hspi2.Init.FifoThreshold = SPI_FIFO_THRESHOLD_01DATA;
   hspi2.Init.TxCRCInitializationPattern = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
@@ -264,24 +262,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 
     __HAL_LINKDMA(spiHandle,hdmarx,hdma_spi2_rx);
 
-    /* SPI2_TX Init */
-    hdma_spi2_tx.Instance = DMA1_Stream3;
-    hdma_spi2_tx.Init.Request = DMA_REQUEST_SPI2_TX;
-    hdma_spi2_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_spi2_tx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_spi2_tx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_spi2_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_spi2_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_spi2_tx.Init.Mode = DMA_NORMAL;
-    hdma_spi2_tx.Init.Priority = DMA_PRIORITY_LOW;
-    hdma_spi2_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_spi2_tx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(spiHandle,hdmatx,hdma_spi2_tx);
-
     /* SPI2 interrupt Init */
     HAL_NVIC_SetPriority(SPI2_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(SPI2_IRQn);
@@ -342,7 +322,6 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 
     /* SPI2 DMA DeInit */
     HAL_DMA_DeInit(spiHandle->hdmarx);
-    HAL_DMA_DeInit(spiHandle->hdmatx);
 
     /* SPI2 interrupt Deinit */
     HAL_NVIC_DisableIRQ(SPI2_IRQn);

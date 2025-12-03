@@ -147,7 +147,7 @@ int main(void)
   MX_TIM24_Init();
   MX_I2S6_Init();
   MX_SPI1_Init();
-  MX_USB_OTG_HS_USB_Init();
+  MX_USB_OTG_HS_PCD_Init();
   MX_USART1_UART_Init();
   MX_TIM2_Init();
   MX_TIM8_Init();

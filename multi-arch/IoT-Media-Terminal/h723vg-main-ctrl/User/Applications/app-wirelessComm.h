@@ -39,6 +39,8 @@
 /* II. OS */
 
 #include "semphr.h"
+#include "stm32h7xx_hal.h"
+#include "stm32h7xx_hal_spi.h"
 
 /* III. middlewares */
 
@@ -60,6 +62,7 @@
 /*-------- 3. interface ---------------------------------------------------------------------------------------------*/
 
 extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+extern "C" void HAL_SPI_RxCplt_Callback(SPI_HandleTypeDef* hspi);
 
 
 class WirelessCommApp final : public StaticAppBase {
@@ -86,7 +89,7 @@ class WirelessCommApp final : public StaticAppBase {
     // 2. mutex
 
     // 3. semphr
-    xSemaphoreHandle _coProcessorReady;
+    xSemaphoreHandle _frameRxCplt;
 
     // 4. notify
 
@@ -95,6 +98,7 @@ class WirelessCommApp final : public StaticAppBase {
     // 6. event group
 
     friend void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+    friend void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef* hspi);
 };
 #endif
 

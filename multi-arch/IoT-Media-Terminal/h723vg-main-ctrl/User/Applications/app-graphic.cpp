@@ -134,7 +134,6 @@ void GraphicApp::init() {
     __WRITE_REG(ILI9481_CMD::SOFT_RESET);
     vTaskDelay(100);
 
-
     lv_init();
 
     lv_port_disp_init();
@@ -156,8 +155,6 @@ void GraphicApp::run() {
     uint32_t execTime = TIM24->CNT - startTick;
     vTaskDelayUntil(&last_wake_up, 1000);
 
-
-    host.println("计算用时：%d us", execTime);
 }
 
 uint8_t GraphicApp::rxMsg(void* msg, uint16_t size) { return 0; }

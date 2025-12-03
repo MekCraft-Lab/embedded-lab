@@ -54,7 +54,7 @@ extern "C" {
 void lcdInit(void);
 
 void lcdFillRect(uint16_t x, uint16_t y, uint16_t endx, uint16_t endy, uint16_t* colors);
-
+    void lcdFillRectScale2(uint16_t x, uint16_t y, uint16_t endx, uint16_t endy, uint16_t* color) ;
 #ifdef __cplusplus
 }
 #endif

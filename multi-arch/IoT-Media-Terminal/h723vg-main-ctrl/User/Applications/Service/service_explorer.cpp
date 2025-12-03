@@ -50,19 +50,19 @@ ExplorerServer::ExplorerServer(FrameCallback responseHandler, const ErrorHandler
     : lfs_(lfs), fc_(std::move(responseHandler)) {
     setErrorHandler(errHandler);
     // 文件服务注册
-    registerHandler(FrameType::FILE_READ_REQ, [this](MekFrame& frame) { this->fileReadHandler_(frame); }, 4, 256, 2);
+    registerHandler(FrameType::FILE_READ_REQ, [this](MekFrame& frame) { this->fileReadHandler_(frame); }, 4, 1024, 2);
 
-    registerHandler(FrameType::DIR_LIST, [this](MekFrame& frame) { this->dirListHandler_(frame); }, 4, 256, 2);
+    registerHandler(FrameType::DIR_LIST, [this](MekFrame& frame) { this->dirListHandler_(frame); }, 4, 512, 2);
 
-    registerHandler(FrameType::FILE_WRITE_REQ, [this](MekFrame& frame) { this->fileWriteHandler_(frame); }, 4, 256, 2);
+    registerHandler(FrameType::FILE_WRITE_REQ, [this](MekFrame& frame) { this->fileWriteHandler_(frame); }, 4, 512, 2);
 
-    registerHandler(FrameType::FILE_DELETE, [this](MekFrame& frame) { this->fileDeleteHandler_(frame); }, 4, 256, 2);
+    registerHandler(FrameType::FILE_DELETE, [this](MekFrame& frame) { this->fileDeleteHandler_(frame); }, 4, 512, 2);
 
-    registerHandler(FrameType::RENAME, [this](MekFrame& frame) { this->renameHandler_(frame); }, 4, 256, 2);
+    registerHandler(FrameType::RENAME, [this](MekFrame& frame) { this->renameHandler_(frame); }, 4, 512, 2);
 
-    registerHandler(FrameType::DIR_CREATE, [this](MekFrame& frame) { this->dirCreateHandler_(frame); }, 4, 256, 2);
+    registerHandler(FrameType::DIR_CREATE, [this](MekFrame& frame) { this->dirCreateHandler_(frame); }, 4, 512, 2);
 
-    registerHandler(FrameType::CMD, [this](MekFrame& frame) { this->cmdHandler_(frame); }, 4, 256, 2);
+    registerHandler(FrameType::CMD, [this](MekFrame& frame) { this->cmdHandler_(frame); }, 4, 512, 2);
 }
 
 /**
@@ -286,9 +286,9 @@ void ExplorerServer::dirListHandler_(const MekFrame& frame) {
 
         f.payload.insert(f.payload.end(), info.name, info.name + nameLen);
 
-        fc_(f);
-
-        f.payload.clear();
+        // fc_(f);
+        //
+        // f.payload.clear();
     }
 
     lfs_dir_close(&lfs_, &dir);
