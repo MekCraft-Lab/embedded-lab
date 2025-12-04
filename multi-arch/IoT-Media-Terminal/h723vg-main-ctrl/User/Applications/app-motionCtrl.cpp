@@ -178,7 +178,12 @@ __attribute__((section("._dma_pool"))) __packed struct {
     uint32_t capture  : 1;
     uint32_t reverse5 : 5;
     uint32_t start    : 1;
-} gamePad;
+} gamePad = {
+    .leftJoyStickX = 0x8000,
+    .leftJoyStickY = 0x7FFF,
+    .rightJoyStickX = 0x8000,
+    .rightJoyStickY = 0x7FFF,
+};
 
 uint8_t* pGamePad = reinterpret_cast<uint8_t*>(&gamePad);
 /* ------- application attribute -------------------------------------------------------------------------------------*/
@@ -227,6 +232,7 @@ void MotionCtrlApp::init() {
     HAL_TIM_Base_Start(&htim2);
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1 | TIM_CHANNEL_2 | TIM_CHANNEL_3 | TIM_CHANNEL_4);
     TIM2->CCER |= TIM_CCER_CC1E | TIM_CCER_CC2E | TIM_CCER_CC3E | TIM_CCER_CC4E; // CH1 输出使能
+
 }
 
 

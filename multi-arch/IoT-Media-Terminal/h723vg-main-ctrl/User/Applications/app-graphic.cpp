@@ -39,6 +39,7 @@
 /* III. standard lib */
 #include "Middlewares/lvgl/lv_port_disp.h"
 #include "Middlewares/lvgl/src/lv_init.h"
+#include "Middlewares/lvgl/demos/benchmark/lv_demo_benchmark.h"
 #include "app-createTimer.h"
 #include "gpio.h"
 #include "tim.h"
@@ -140,15 +141,9 @@ void GraphicApp::init() {
 
     lv_port_disp_init();
 
-    lv_demo_clock();
+    lv_demo_benchmark();
 
     HAL_TIM_Base_Start(&htim24);
-
-    // 创建全屏图片对象
-    lv_obj_t *video_img = lv_img_create(lv_scr_act());
-    lv_obj_align(video_img, LV_ALIGN_CENTER, 0, 0);
-
-
 
 
 }
@@ -163,7 +158,7 @@ void GraphicApp::run() {
     lv_timer_handler();
 
     uint32_t execTime = TIM24->CNT - startTick;
-    vTaskDelayUntil(&last_wake_up, 1000);
+    vTaskDelayUntil(&last_wake_up, 1);
 
 }
 

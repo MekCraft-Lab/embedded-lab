@@ -44,6 +44,11 @@ file(GLOB_RECURSE LVGL_SRC
         "${CMAKE_CURRENT_LIST_DIR}/src/hal/*.c"
         "${CMAKE_CURRENT_LIST_DIR}/src/misc/*.c"
         "${CMAKE_CURRENT_LIST_DIR}/src/widgets/*.c"
+        "${CMAKE_CURRENT_LIST_DIR}/demos/benchmark/lv_demo_benchmark.c"
+        "${CMAKE_CURRENT_LIST_DIR}/demos/widgets/*.c"
+        "${CMAKE_CURRENT_LIST_DIR}/demos/benchmark/assets/*.c"
+        "${CMAKE_CURRENT_LIST_DIR}/demos/widgets/assets/*.c"
+
 )
 
 set(MX_Include_Dirs
