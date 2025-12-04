@@ -256,6 +256,11 @@ SECTIONS
     . = ALIGN(4);
   } >RAM_D1
 
+  ._vedio_stream_buffer (NOLOAD) :
+  {
+    *(._vedio_stream_buffer);
+  } >RAM_D2
+
 
   /* Remove information from the standard libraries */
   /DISCARD/ :

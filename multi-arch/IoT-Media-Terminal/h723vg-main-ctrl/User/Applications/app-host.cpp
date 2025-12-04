@@ -39,9 +39,12 @@
 #include "./app-fileSystem.h"
 
 /* III. standard lib */
+#include "app-wirelessComm.h"
+
+
+#include <cstdarg>
 #include <cstdio>
 #include <cstring>
-#include <cstdarg>
 
 
 
@@ -108,6 +111,7 @@ HostApp::HostApp()
 
 void HostApp::init() {
     /* driver object initialize */
+    WirelessCommApp::instance().waitInit();
     _waitForTransmitLock = xSemaphoreCreateBinary();
     println("console application start");
 }

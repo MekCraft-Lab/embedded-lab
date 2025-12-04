@@ -53,7 +53,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         User/Applications/app-graphic.cpp
         User/Applications/app-createTimer.cpp
         User/Middlewares/lvgl/lv_port_disp.c
-        User/Applications/app-wirelessComm.cpp)
+        User/Applications/app-wirelessComm.cpp
+        User/Applications/app-motionCtrl.cpp)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)

@@ -37,6 +37,7 @@
 #include "app-createTimer.h"
 
 #include "Middlewares/lvgl/src/tick/lv_tick.h"
+#include "app-wirelessComm.h"
 
 /* II. other application */
 
@@ -109,6 +110,8 @@ CreateTimerApp& CreateTimerApp::instance() {
 
 void CreateTimerApp::init() {
     /* driver object initialize */
+
+    WirelessCommApp::instance().waitInit();
 
     _lvglTickTimer = xTimerCreate(
         "CreateTimer",

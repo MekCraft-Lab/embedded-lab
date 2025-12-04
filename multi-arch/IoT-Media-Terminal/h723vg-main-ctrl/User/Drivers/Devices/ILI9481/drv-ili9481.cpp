@@ -77,12 +77,25 @@ static inline void FMC_Write16(uint32_t addr, uint16_t data) {
 ILI9481_ERROR ILI9481::init() {
 
 
+
+
     // 0. 参数检查
     uint32_t ret;
     ret = (uint32_t)_delayMs;
     if (ret == 0) {
         return ILI9481_ERROR::PARAM_ERR;
+
     }
+
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+    _delayMs(500);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+    _delayMs(500);
+
+    __WRITE_REG(ILI9481_CMD::SOFT_RESET);
+    _delayMs(100);
+
     // 1. 退出休眠
     __WRITE_REG(ILI9481_CMD::EXIT_SLEEP); // 退出休眠
     _delayMs(200);

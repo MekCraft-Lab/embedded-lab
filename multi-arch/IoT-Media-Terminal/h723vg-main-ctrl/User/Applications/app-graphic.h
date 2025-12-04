@@ -77,6 +77,9 @@ class GraphicApp final : public StaticAppBase {
 
   private:
     /* message interface */
+
+
+
     uint8_t _index{};
     StaticStreamBuffer_t _stm{};
     StreamBufferHandle_t _sbHandle;

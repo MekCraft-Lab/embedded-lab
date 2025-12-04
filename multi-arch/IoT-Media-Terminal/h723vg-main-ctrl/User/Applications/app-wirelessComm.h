@@ -91,6 +91,7 @@ class WirelessCommApp final : public StaticAppBase {
     // 3. semphr
     xSemaphoreHandle _frameRxCplt;
 
+    xSemaphoreHandle _waitForVedio;
     // 4. notify
 
     // 5. stream or message

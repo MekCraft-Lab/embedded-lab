@@ -60,7 +60,7 @@ ExplorerServer::ExplorerServer(FrameCallback responseHandler, const ErrorHandler
 
     registerHandler(FrameType::RENAME, [this](MekFrame& frame) { this->renameHandler_(frame); }, 4, 512, 2);
 
-    registerHandler(FrameType::DIR_CREATE, [this](MekFrame& frame) { this->dirCreateHandler_(frame); }, 4, 512, 2);
+    registerHandler(FrameType::DIR_CREATE, [this](MekFrame& frame) { this->dirCreateHandler_(frame); }, 4, 1024, 2);
 
     registerHandler(FrameType::CMD, [this](MekFrame& frame) { this->cmdHandler_(frame); }, 4, 512, 2);
 }

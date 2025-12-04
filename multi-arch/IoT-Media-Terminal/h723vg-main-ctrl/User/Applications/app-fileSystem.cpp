@@ -347,10 +347,16 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
 
         HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rxBuf, 512);
     }
+
+    if (huart == &huart8) {
+        extern uint8_t* pGamePad;
+        HAL_UARTEx_ReceiveToIdle_DMA(&huart8, reinterpret_cast<uint8_t*>(pGamePad), 16);
+
+    }
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
-    if (huart == &huart1) {
+    if (huart) {
         if (huart->ErrorCode & HAL_UART_ERROR_ORE) {
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET);
         }

@@ -78,6 +78,8 @@ static ILI9481 lcd(GraphicApp::delayMs);
 uint32_t exec_time_us;
 
 
+
+
 /* ------- application attribute -------------------------------------------------------------------------------------*/
 
 #define APPLICATION_ENABLE     true
@@ -141,6 +143,14 @@ void GraphicApp::init() {
     lv_demo_clock();
 
     HAL_TIM_Base_Start(&htim24);
+
+    // 创建全屏图片对象
+    lv_obj_t *video_img = lv_img_create(lv_scr_act());
+    lv_obj_align(video_img, LV_ALIGN_CENTER, 0, 0);
+
+
+
+
 }
 
 
@@ -191,3 +201,5 @@ void lv_demo_clock(void)
     /* 每 1000ms 更新一次 */
     lv_timer_create(clock_update_cb, 1000, NULL);
 }
+
+

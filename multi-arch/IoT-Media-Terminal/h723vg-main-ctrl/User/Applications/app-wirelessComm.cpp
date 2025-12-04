@@ -26,7 +26,7 @@
 
 #define FRAME_SIZE 1204
 
-
+#define FRAME_H 320 //逐列扫描，因此应该是 320
 
 /* ------- include ---------------------------------------------------------------------------------------------------*/
 
@@ -67,6 +67,15 @@ static __attribute__((section("._dma_pool"))) uint8_t rxBuff[512] = {0};
 static __attribute__((section("._dma_pool"))) uint8_t frameBuffer[FRAME_SIZE + 2] = {0};
 
 
+
+__attribute__((section("._vedio_stream_buffer"))) static uint8_t vStreamBuf1[8192] = {0};
+__attribute__((section("._vedio_stream_buffer"))) static uint8_t vStreamBuf2[8192] = {0};
+
+
+volatile uint8_t current_buf = 0; // 0->buf0, 1->buf1
+volatile uint16_t current_line = 0;
+
+uint8_t vedioFinished = 0;
 
 /* ------- application attribute -------------------------------------------------------------------------------------*/
 
@@ -111,9 +120,22 @@ void WirelessCommApp::init() {
     /* driver object initialize */
 
     _frameRxCplt = xSemaphoreCreateBinary();
+    _waitForVedio = xSemaphoreCreateBinary();
 
-    HAL_SPI_Receive_DMA(&hspi2, frameBuffer, sizeof(frameBuffer));
+    // xSemaphoreTake(_waitForVedio, portMAX_DELAY);
 
+    ILI9481::init();
+
+
+
+
+
+    __WRITE_REG(ILI9481_CMD::WRITE_MEM_START)
+
+
+
+    //
+    // vTaskSuspendAll();
 
 }
 
@@ -169,15 +191,51 @@ uint8_t WirelessCommApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) { r
 
 
 extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-
+    // if (GPIO_Pin == GPIO_PIN_7) {
+    //
+    //     // GPIO PC7被上拉，触发
+    //     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    //     xSemaphoreGiveFromISR(wirelessCommApp._waitForVedio, &xHigherPriorityTaskWoken);
+    //     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    //     HAL_SPI_Receive_DMA(&hspi2, frameBuffer, sizeof(frameBuffer));
+    // }
 }
-
+//
+//
 extern "C" void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef* hspi) {
     if (hspi == &hspi2) {
-        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-        xSemaphoreGiveFromISR(wirelessCommApp._frameRxCplt, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-        HAL_SPI_Receive_DMA(&hspi2, frameBuffer, sizeof(frameBuffer));
+        //
+        // //
+        // // BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+        // // xSemaphoreGiveFromISR(wirelessCommApp._frameRxCplt, &xHigherPriorityTaskWoken);
+        // // portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        // // HAL_SPI_Receive_DMA(&hspi2, frameBuffer, sizeof(frameBuffer));
+        //
+        // __WRITE_REG((uint16_t)ILI9481_CMD::SET_PAGE_ADDR);
+        // __WRITE_DATA(0 >> 8);
+        // __WRITE_DATA(0 & 0xFF);
+        // __WRITE_DATA(479 >> 8);
+        // __WRITE_DATA(479 & 0xFF);
+        //
+        // // -----------------------------
+        // // 设置列地址 SET_COLUMN_ADDR
+        // // -----------------------------
+        // __WRITE_REG((uint16_t)ILI9481_CMD::SET_COL_ADDR);
+        // __WRITE_DATA(0 >> 8);
+        // __WRITE_DATA(0 & 0xFF);
+        // __WRITE_DATA(319 >> 8);
+        // __WRITE_DATA(319 & 0xFF);
+        //
+        // // -----------------------------
+        // // 开始写入像素数据 RAM WRITE
+        // // -----------------------------
+        //
+        //
+        // __WRITE_REG(ILI9481_CMD::WRITE_MEM_START);
+
+        //HAL_SPI_Receive_DMA(&hspi2, reinterpret_cast<uint8_t*>(DATA_ADDR), 320);
+        extern uint8_t* pGamePad;
+        HAL_SPI_Receive_DMA(hspi, pGamePad, 16);
     }
 }
 
@@ -201,8 +259,8 @@ void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi)
     HAL_SPI_Init(hspi);
 
     // 5. 如果使用 DMA接收，重新启动 DMA
-
-    HAL_SPI_Receive_DMA(hspi, frameBuffer, FRAME_SIZE + 2);
+    extern uint8_t* pGamePad;
+    HAL_SPI_Receive_DMA(hspi, pGamePad, 16);
 
     // 6. 使能 SPI
     __HAL_SPI_ENABLE(hspi);
