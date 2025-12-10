@@ -38,7 +38,7 @@
 
 static void lcdPanelIOInit(esp_lcd_i80_bus_handle_t, esp_lcd_panel_io_handle_t*);
 
-static void lcdPanelInit(esp_lcd_panel_io_handle_t, esp_lcd_panel_handle_t);
+static void lcdPanelInit(esp_lcd_panel_io_handle_t, esp_lcd_panel_handle_t*);
 
 
 /* ------- macro -----------------------------------------------------------------------------------------------------*/
@@ -49,11 +49,8 @@ static void lcdPanelInit(esp_lcd_panel_io_handle_t, esp_lcd_panel_handle_t);
 
 /* ------- variables -------------------------------------------------------------------------------------------------*/
 
-static esp_lcd_i80_bus_handle_t i80Bus;
+static esp_lcd_panel_io_handle_t* _pIoHandle;
 
-static esp_lcd_panel_io_handle_t ioHandle;
-
-static esp_lcd_panel_handle_t panelHandle;
 
 /* ------- function implement ----------------------------------------------------------------------------------------*/
 
@@ -70,17 +67,14 @@ void lcdInitBusIOAndPanel(esp_lcd_i80_bus_handle_t* pBusHandle, esp_lcd_panel_io
         .bus_width          = 8,
         .max_transfer_bytes = 240 * 40 * 2, // 每次 DMA 最大传输
     };
-    esp_lcd_new_i80_bus(&busConfig, &i80Bus);
+    esp_lcd_new_i80_bus(&busConfig, pBusHandle);
 
-    lcdPanelIOInit(i80Bus, &ioHandle);
+    lcdPanelIOInit(*pBusHandle, pIoHandle);
 
-    lcdPanelInit(ioHandle, panelHandle);
+    lcdPanelInit(*pIoHandle, pPanelHandle);
 
-    *pBusHandle = i80Bus;
+    _pIoHandle = pIoHandle;
 
-    *pIoHandle  = ioHandle;
-
-    *pPanelHandle = panelHandle;
 }
 
 
@@ -98,6 +92,13 @@ static void lcdPanelIOInit(esp_lcd_i80_bus_handle_t busHandle, esp_lcd_panel_io_
         .user_ctx            = nullptr,
         .lcd_cmd_bits        = 8,
         .lcd_param_bits      = 8,
+        .dc_levels = {
+            .dc_cmd_level = 0,
+            .dc_data_level = 1,
+        },
+        .flags = {
+            .cs_active_high = 0,
+        },
     };
 
     esp_lcd_new_panel_io_i80(busHandle, &ioConfig, ioHandle_);
@@ -106,9 +107,9 @@ static void lcdPanelIOInit(esp_lcd_i80_bus_handle_t busHandle, esp_lcd_panel_io_
 /**
  * @brief 初始化panelHandle
  * @param ioHandle_ IO句柄
- * @param panelHandle_ 屏幕句柄
+ * @param pPanelHandle 屏幕句柄
  */
-static void lcdPanelInit(esp_lcd_panel_io_handle_t ioHandle_, esp_lcd_panel_handle_t panelHandle_) {
+static void lcdPanelInit(esp_lcd_panel_io_handle_t ioHandle_, esp_lcd_panel_handle_t* pPanelHandle) {
     esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = RESET_PIN,
         .rgb_endian     = LCD_RGB_ENDIAN_RGB,
@@ -116,10 +117,61 @@ static void lcdPanelInit(esp_lcd_panel_io_handle_t ioHandle_, esp_lcd_panel_hand
     };
 
 
-    esp_lcd_new_panel_st7789(ioHandle_, &panel_config, &panelHandle_);
+    esp_lcd_new_panel_st7789(ioHandle_, &panel_config, pPanelHandle);
 
     // 初始化 LCD
-    esp_lcd_panel_reset(panelHandle_);
-    esp_lcd_panel_init(panelHandle_);
-    esp_lcd_panel_invert_color(panelHandle_, true);
+    // esp_lcd_panel_reset(*pPanelHandle);
+    // esp_lcd_panel_init(*pPanelHandle);
+    // esp_lcd_panel_invert_color(*pPanelHandle, true);
+}
+
+void st7789Init() {
+
+
+    gpio_config_t io_conf = {
+        .pin_bit_mask = 1ULL << READ_ENABLE_PIN,
+        .mode = GPIO_MODE_OUTPUT,          // 推挽输出
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE,
+    };
+
+    gpio_set_level(static_cast<gpio_num_t>(READ_ENABLE_PIN), 1);
+    gpio_config(&io_conf);
+
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0x36, (uint8_t[]){0x00}, 1);
+
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0x3A, (uint8_t[]){0x05}, 1);
+
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xB2, (uint8_t[]){0x0C, 0x0C, 0x00, 0x33, 0x33}, 5);
+
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xB7, (uint8_t[]){0x35}, 1);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xBB, (uint8_t[]){0x19}, 1);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xC0, (uint8_t[]){0x2C}, 1);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xC2, (uint8_t[]){0x01}, 1);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xC3, (uint8_t[]){0x12}, 1);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xC4, (uint8_t[]){0x20}, 1);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xC6, (uint8_t[]){0x0F}, 1);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xD0, (uint8_t[]){0xA4, 0xA1}, 2);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xE0, (uint8_t[]){0xD0, 0x04, 0x0D, 0x11, 0x13, 0x2B, 0x3F, 0x54, 0x4C, 0x18, 0x0D, 0x0B, 0x1F, 0x23}, 14);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0xE1, (uint8_t[]){0xD0, 0x04, 0x0C, 0x11, 0x13, 0x2C, 0x3F, 0x44, 0x51, 0x2F, 0x1F, 0x1F, 0x20, 0x23}, 14);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0x11, nullptr, 0);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0x29, nullptr, 0);
+
+
 }

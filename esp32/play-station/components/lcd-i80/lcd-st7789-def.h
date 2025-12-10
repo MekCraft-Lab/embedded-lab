@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file    lcd-i80.h
+ * @file    lcd-st7789-def.h
  * @brief   简要描述
  *******************************************************************************
  * @attention
@@ -22,34 +22,54 @@
 
 /* Define to prevent recursive inclusion -----------------------------------------------------------------------------*/
 
-#ifndef HOST_PROCESSOR_LCD_I80_H
-#define HOST_PROCESSOR_LCD_I80_H
+#ifndef HOST_PROCESSOR_LCD_ST7789_DEF_H
+#define HOST_PROCESSOR_LCD_ST7789_DEF_H
 
 
 
 /*-------- 1. includes and imports -----------------------------------------------------------------------------------*/
 
-#include "./lcd-i80-config.h"
-#include "driver/gpio.h"
-#include "esp_lcd_panel_io.h"
-#include "esp_lcd_panel_vendor.h"
-#include "esp_lcd_panel_ops.h"
-#include "lcd-st7789-def.h"
-
+#include <stdint.h>
 
 
 
 /*-------- 2. enum and define ----------------------------------------------------------------------------------------*/
 
+enum class ST7789Cmd : uint8_t {
+    NOP     = 0X00,
+    SWRESET = 0X01,
+    RDDID   = 0X04,
+    RDDST   = 0X09,
+    RDDPM   = 0X0A,
+    SLPOUT  = 0X11,
+    PTLON   = 0X12,
+    NORON   = 0X13,
+    INVOFF  = 0x20,
+    INVON   = 0x21,
+    GAMSET  = 0x26,
+    DISPON  = 0x29,
+    CASET   = 0x2A,
+    RASET   = 0x2B,
+    RAMWR   = 0x2C,
+    RAMRD   = 0x2E,
+    PTLAR   = 0x30,
+    VSCRDEF = 0x33,
+    WRMEMC  = 0x3C,
+    RDMEMC  = 0x3E,
+    WRDISBV = 0x51,
+    RDDISBV = 0x54,
+    RDID1   = 0xDA,
+    RDID2   = 0xDB,
+    RDID3   = 0xDC,
+
+
+};
 
 
 
 /*-------- 3. interface ----------------------------------------------------------------------------------------------*/
 
-void lcdInitBusIOAndPanel(esp_lcd_i80_bus_handle_t*, esp_lcd_panel_io_handle_t*, esp_lcd_panel_handle_t*);
 
-
-void st7789Init();
 
 
 /*-------- 4. decorator ----------------------------------------------------------------------------------------------*/
@@ -63,4 +83,4 @@ void st7789Init();
 
 
 
-#endif /*HOST_PROCESSOR_LCD_I80_H*/
+#endif /*HOST_PROCESSOR_LCD_ST7789_DEF_H*/

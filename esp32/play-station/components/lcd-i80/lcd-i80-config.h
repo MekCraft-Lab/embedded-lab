@@ -34,22 +34,23 @@
 
 /*-------- 2. enum and define ----------------------------------------------------------------------------------------*/
 
-#define DC_PIN            13
-#define WRITE_ENABLE_PIN  12
-#define READ_ENABLE_PIN   11
-#define D0_PIN            20
-#define D1_PIN            21
-#define D2_PIN            22
-#define D3_PIN            23
-#define D4_PIN            24
-#define D5_PIN            25
-#define D6_PIN            26
-#define D7_PIN            27
-#define RESET_PIN         28
-#define BACKLIGHT_LED_PIN 29
-#define CS_PIN            10
 
-#define COMM_FREQ         20000000
+#define READ_ENABLE_PIN   23
+#define DC_PIN            37
+#define WRITE_ENABLE_PIN  36
+#define D0_PIN            34
+#define D1_PIN            33
+#define D2_PIN            32
+#define D3_PIN            26
+#define D4_PIN            27
+#define D5_PIN            28
+#define D6_PIN            29
+#define D7_PIN            30
+#define RESET_PIN         31
+#define BACKLIGHT_LED_PIN 38
+#define CS_PIN            39
+
+#define COMM_FREQ         2000000
 
 
 
