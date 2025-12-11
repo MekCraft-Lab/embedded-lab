@@ -1,0 +1,10 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=1 D:\Program\MekCraft-Labs\embedded-lab\esp32\play-station
+CMake Error at C:/env/Espressif/frameworks/esp-idf-v5.5.1/tools/cmake/component.cmake:318 (message):
+  Include directory
+  'D:/Program/MekCraft-Labs/embedded-lab/esp32/play-station/main/REQUIRE' is
+  not a directory.
+Call Stack (most recent call first):
+  C:/env/Espressif/frameworks/esp-idf-v5.5.1/tools/cmake/component.cmake:500 (__component_add_include_dirs)
+  main/CMakeLists.txt:1 (idf_component_register)
+
+

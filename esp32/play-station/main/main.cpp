@@ -30,8 +30,6 @@
 
 /* ------- include ---------------------------------------------------------------------------------------------------*/
 
-#include "Applications/app-createTimer.cpp.h"
-#include "Applications/app-graphic.cpp.h"
 #include "esp_log.h"
 #include "lcd-i80.h"
 #include "esp_lvgl_port.h"

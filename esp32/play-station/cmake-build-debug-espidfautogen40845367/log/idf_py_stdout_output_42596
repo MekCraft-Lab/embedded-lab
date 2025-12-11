@@ -1,0 +1,13 @@
+Command: ninja all
+[0/1] Re-running CMake...
+-- Minimal build - OFF
+-- ccache will be used for faster recompilation
+-- Building ESP-IDF components for target esp32p4
+NOTICE: Manifest files have changed, solving dependencies.
+..........NOTICE: Processing 6 dependencies:
+NOTICE: [1/6] espressif/eppp_link (1.1.4)
+NOTICE: [2/6] espressif/esp_hosted (2.7.2)
+NOTICE: [3/6] espressif/esp_serial_slave_link (1.1.2)
+-- Configuring incomplete, errors occurred!
+FAILED: build.ninja 
+C:\env\Espressif\tools\cmake\3.30.2\bin\cmake.exe --regenerate-during-build -SD:\Program\MekCraft-Labs\embedded-lab\esp32\play-station -BD:\Program\MekCraft-Labs\embedded-lab\esp32\play-station\cmake-build-debug-espidfautogen40845367

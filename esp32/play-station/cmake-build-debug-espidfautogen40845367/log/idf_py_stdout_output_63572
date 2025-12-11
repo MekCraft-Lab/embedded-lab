@@ -1,0 +1,77 @@
+Command: ninja flash
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\Program\MekCraft-Labs\embedded-lab\esp32\play-station\cmake-build-debug-espidfautogen40845367\esp-idf\esptool_py && C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/Program/MekCraft-Labs/embedded-lab/esp32/play-station/cmake-build-debug-espidfautogen40845367/partition_table/partition-table.bin D:/Program/MekCraft-Labs/embedded-lab/esp32/play-station/cmake-build-debug-espidfautogen40845367/play-station.bin"
+play-station.bin binary size 0x129440 bytes. Smallest app partition is 0x177000 bytes. 0x4dbc0 bytes (21%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\Program\MekCraft-Labs\embedded-lab\esp32\play-station\cmake-build-debug-espidfautogen40845367\bootloader\esp-idf\esptool_py && C:\env\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x2000 D:/Program/MekCraft-Labs/embedded-lab/esp32/play-station/cmake-build-debug-espidfautogen40845367/bootloader/bootloader.bin"
+Bootloader binary size 0x5810 bytes. 0x7f0 bytes (8%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\env\Espressif\frameworks\esp-idf-v5.5.1\components\esptool_py && "C:\Software\JetBrains\CLion 2025.1.4\bin\cmake\win\x64\bin\cmake.exe" -D IDF_PATH=C:/env/Espressif/frameworks/esp-idf-v5.5.1 -D SERIAL_TOOL=C:/env/Espressif/python_env/idf5.5_py3.11_env/Scripts/python.exe;;C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esptool_py/esptool/esptool.py;--chip;esp32p4 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=D:/Program/MekCraft-Labs/embedded-lab/esp32/play-station/cmake-build-debug-espidfautogen40845367 -P C:/env/Espressif/frameworks/esp-idf-v5.5.1/components/esptool_py/run_serial_tool.cmake"
+esptool.py --chip esp32p4 -p COM11 -b 921600 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 16MB 0x2000 bootloader/bootloader.bin 0x10000 play-station.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.10.0
+Serial port COM11
+Connecting...
+Chip is ESP32-P4 (revision v1.0)
+Features: High-Performance MCU
+Crystal is 40MHz
+USB mode: USB-Serial/JTAG
+MAC: 30:ed:a0:e1:6a:d7
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 921600
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00002000 to 0x00007fff...
+Flash will be erased from 0x00010000 to 0x00139fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 22544 bytes to 13858...
+Writing at 0x00002000... (100 %)
+Wrote 22544 bytes (13858 compressed) at 0x00002000 in 0.4 seconds (effective 428.7 kbit/s)...
+Hash of data verified.
+Compressed 1217600 bytes to 565368...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001f450... (5 %)
+Writing at 0x0002ace9... (8 %)
+Writing at 0x0003b68d... (11 %)
+Writing at 0x00042b7b... (14 %)
+Writing at 0x0004ca94... (17 %)
+Writing at 0x00056270... (20 %)
+Writing at 0x00069d0a... (22 %)
+Writing at 0x00075995... (25 %)
+Writing at 0x0007bd6e... (28 %)
+Writing at 0x00081d54... (31 %)
+Writing at 0x0008ddea... (34 %)
+Writing at 0x000945c3... (37 %)
+Writing at 0x0009c5cc... (40 %)
+Writing at 0x000a7698... (42 %)
+Writing at 0x000af690... (45 %)
+Writing at 0x000b61a3... (48 %)
+Writing at 0x000bca08... (51 %)
+Writing at 0x000c3d4a... (54 %)
+Writing at 0x000c9d7a... (57 %)
+Writing at 0x000cfef3... (60 %)
+Writing at 0x000d6db1... (62 %)
+Writing at 0x000dd748... (65 %)
+Writing at 0x000e336b... (68 %)
+Writing at 0x000e9c4e... (71 %)
+Writing at 0x000f2113... (74 %)
+Writing at 0x000fb089... (77 %)
+Writing at 0x00101ca6... (80 %)
+Writing at 0x00108b70... (82 %)
+Writing at 0x0010fe54... (85 %)
+Writing at 0x00116878... (88 %)
+Writing at 0x0011e5b8... (91 %)
+Writing at 0x001252bc... (94 %)
+Writing at 0x0012c1f2... (97 %)
+Writing at 0x00133abc... (100 %)
+Wrote 1217600 bytes (565368 compressed) at 0x00010000 in 8.2 seconds (effective 1194.5 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 105...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (105 compressed) at 0x00008000 in 0.1 seconds (effective 375.2 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

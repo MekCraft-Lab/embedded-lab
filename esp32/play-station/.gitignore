@@ -26,5 +26,7 @@ JLinkLog.txt
 build/
 .idea
 .vscode
-cmake*
+cmake
+!*/CMakeLists.txt
+!CMakeLists.txt
 ./managed_components/
