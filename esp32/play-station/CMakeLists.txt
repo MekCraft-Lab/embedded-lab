@@ -4,3 +4,6 @@ cmake_minimum_required(VERSION 3.16)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(play-station)
+
+# 创建LittleFs分区
+littlefs_create_partition_image(littlefs littlefs)

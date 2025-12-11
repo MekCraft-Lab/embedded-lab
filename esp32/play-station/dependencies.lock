@@ -14,7 +14,7 @@ dependencies:
       type: service
     version: 1.1.4
   espressif/esp_hosted:
-    component_hash: 53544436deb5fcbfdbf4a8e2c643cdbe31126556781784278c016d674df99cd2
+    component_hash: ebb6dd682b8dde44589552f6edab53267a5b9dc9fae88cda7af292e52391a261
     dependencies:
     - name: idf
       require: private
@@ -22,7 +22,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 2.7.0
+    version: 2.7.2
   espressif/esp_lvgl_port:
     component_hash: f872401524cb645ee6ff1c9242d44fb4ddcfd4d37d7be8b9ed3f4e85a404efcd
     dependencies:
@@ -85,6 +85,16 @@ dependencies:
     source:
       type: idf
     version: 5.5.1
+  joltwallet/littlefs:
+    component_hash: 1808d73e99168f6f3c26dd31799a248484762b3a320ec4962dec11a145f4277f
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.20.3
   lvgl/lvgl:
     component_hash: 17e68bfd21f0edf4c3ee838e2273da840bf3930e5dbc3bfa6c1190c3aed41f9f
     dependencies: []
@@ -97,6 +107,7 @@ direct_dependencies:
 - espressif/esp_lvgl_port
 - espressif/esp_wifi_remote
 - idf
-manifest_hash: afa62c3c66e3a770a37206b6e42ad840c6c7ccc4a97403f4913c1175aa4db720
+- joltwallet/littlefs
+manifest_hash: 7bceeb8340b5e20bb18aa7b46accf561c86dece283ad2d9d88b43d5574f4601e
 target: esp32p4
 version: 2.0.0

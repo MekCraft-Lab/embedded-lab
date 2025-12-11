@@ -30,7 +30,9 @@
 
 /* ------- include ---------------------------------------------------------------------------------------------------*/
 
+#include "applications/app-filesys.h"
 #include "applications/app-gamepad.h"
+#include "applications/app-audio.h"
 #include "demos/benchmark/lv_demo_benchmark.h"
 #include "esp_log.h"
 #include "esp_lvgl_port.h"
@@ -124,7 +126,8 @@ extern "C" void app_main() {
 
 
     GamepadApp::instance();
-
+    FilesysApp::instance();
+    AudioApp::instance();
     StaticAppBase::startApplications();
 
 

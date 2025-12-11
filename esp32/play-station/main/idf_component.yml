@@ -17,3 +17,4 @@ dependencies:
   espressif/esp_wifi_remote: '*'
   espressif/esp_hosted: '*'
   espressif/esp_lvgl_port: '*'
+  joltwallet/littlefs: '*'
