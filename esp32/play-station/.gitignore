@@ -23,7 +23,8 @@ JLinkLog.txt
 *.sct
 *.map
 *.uvguix.*
-build
+build/
 .idea
 .vscode
 cmake*
+./managed_components/
