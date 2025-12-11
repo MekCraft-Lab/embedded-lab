@@ -35,36 +35,6 @@
 
 /*-------- 2. enum and define ----------------------------------------------------------------------------------------*/
 
-enum class ST7789Cmd : uint8_t {
-    NOP     = 0X00,
-    SWRESET = 0X01,
-    RDDID   = 0X04,
-    RDDST   = 0X09,
-    RDDPM   = 0X0A,
-    SLPOUT  = 0X11,
-    PTLON   = 0X12,
-    NORON   = 0X13,
-    INVOFF  = 0x20,
-    INVON   = 0x21,
-    GAMSET  = 0x26,
-    DISPON  = 0x29,
-    CASET   = 0x2A,
-    RASET   = 0x2B,
-    RAMWR   = 0x2C,
-    RAMRD   = 0x2E,
-    PTLAR   = 0x30,
-    VSCRDEF = 0x33,
-    WRMEMC  = 0x3C,
-    RDMEMC  = 0x3E,
-    WRDISBV = 0x51,
-    RDDISBV = 0x54,
-    RDID1   = 0xDA,
-    RDID2   = 0xDB,
-    RDID3   = 0xDC,
-
-
-};
-
 
 
 /*-------- 3. interface ----------------------------------------------------------------------------------------------*/

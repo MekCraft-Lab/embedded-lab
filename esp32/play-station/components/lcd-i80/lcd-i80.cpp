@@ -58,7 +58,7 @@ static esp_lcd_panel_io_handle_t* _pIoHandle;
 /**
  * @brief 创建8080总线
  */
-void lcdInitBusIOAndPanel(esp_lcd_i80_bus_handle_t* pBusHandle, esp_lcd_panel_io_handle_t* pIoHandle, esp_lcd_panel_handle_t* pPanelHandle) {
+extern "C" void lcdInitBusIOAndPanel(esp_lcd_i80_bus_handle_t* pBusHandle, esp_lcd_panel_io_handle_t* pIoHandle, esp_lcd_panel_handle_t* pPanelHandle) {
     esp_lcd_i80_bus_config_t busConfig = {
         .dc_gpio_num        = DC_PIN,
         .wr_gpio_num        = WRITE_ENABLE_PIN,
@@ -125,7 +125,9 @@ static void lcdPanelInit(esp_lcd_panel_io_handle_t ioHandle_, esp_lcd_panel_hand
     // esp_lcd_panel_invert_color(*pPanelHandle, true);
 }
 
-void st7789Init() {
+extern "C" void st7789Init() {
+
+    vTaskDelay(100);
 
 
     gpio_config_t io_conf = {
@@ -168,6 +170,8 @@ void st7789Init() {
     esp_lcd_panel_io_tx_param(*_pIoHandle, 0xE0, (uint8_t[]){0xD0, 0x04, 0x0D, 0x11, 0x13, 0x2B, 0x3F, 0x54, 0x4C, 0x18, 0x0D, 0x0B, 0x1F, 0x23}, 14);
 
     esp_lcd_panel_io_tx_param(*_pIoHandle, 0xE1, (uint8_t[]){0xD0, 0x04, 0x0C, 0x11, 0x13, 0x2C, 0x3F, 0x44, 0x51, 0x2F, 0x1F, 0x1F, 0x20, 0x23}, 14);
+
+    esp_lcd_panel_io_tx_param(*_pIoHandle, 0x21, nullptr, 0);
 
     esp_lcd_panel_io_tx_param(*_pIoHandle, 0x11, nullptr, 0);
 

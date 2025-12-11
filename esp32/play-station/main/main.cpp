@@ -22,15 +22,20 @@
 
 /* ------- define ----------------------------------------------------------------------------------------------------*/
 
+#define TAG "main"
 
-
+#define DISP_WIDTH 240
+#define DISP_HEIGHT 240
 
 
 /* ------- include ---------------------------------------------------------------------------------------------------*/
 
+#include "Applications/app-createTimer.cpp.h"
+#include "Applications/app-graphic.cpp.h"
+#include "esp_log.h"
 #include "lcd-i80.h"
-#include "esp_lcd_panel_io.h"
-
+#include "esp_lvgl_port.h"
+#include "demos/benchmark/lv_demo_benchmark.h"
 
 
 
@@ -69,37 +74,56 @@ TickType_t sysTick;
 
 extern "C" void app_main() {
 
+    const lvgl_port_cfg_t lvgl_cfg = ESP_LVGL_PORT_INIT_CONFIG();
+    esp_err_t err = lvgl_port_init(&lvgl_cfg);
+
+
+    static lv_disp_t * disp_handle;
+
+    /* LCD IO */
     lcdInitBusIOAndPanel(&i80Bus, &ioHandle, &panelHandle);
 
-
     esp_lcd_panel_reset(panelHandle);
-
-    vTaskDelay(100);
-    printf("软复位完成\n");
-
 
     st7789Init();
 
 
+    /* Add LCD screen */
+    const lvgl_port_display_cfg_t disp_cfg = {
+        .io_handle = ioHandle,
+        .panel_handle = panelHandle,
+        .buffer_size = DISP_WIDTH * 20 * 2,
+        .double_buffer = true,
+        .hres = DISP_WIDTH,
+        .vres = DISP_HEIGHT,
+        .monochrome = false,
+        .rotation = {
+            .swap_xy = false,
+            .mirror_x = false,
+            .mirror_y = false,
+        },
+        .color_format = LV_COLOR_FORMAT_RGB565,
+        .flags = {
+            .buff_dma = true,
+            .swap_bytes = true,
+        }
+    };
+
+    disp_handle = lvgl_port_add_disp(&disp_cfg);
+
+    /* ... the rest of the initialization ... */
+
+
+    if (lvgl_port_lock(30)) {
+
+        lv_demo_benchmark();
+
+        lvgl_port_unlock();
+    }
 
 
 
     while (1) {
-        sysTick = xTaskGetTickCount();
-
-        esp_lcd_panel_io_tx_param(ioHandle, (uint8_t)ST7789Cmd::INVOFF, nullptr, 0);
-
-        vTaskDelay(100);
-
-        esp_lcd_panel_io_tx_param(ioHandle, (uint8_t)ST7789Cmd::INVON, nullptr, 0);
-
-        vTaskDelay(100);
-
-        printf("反转一次\n");
-
-
-
-
 
 
         vTaskDelayUntil(&sysTick, 1);

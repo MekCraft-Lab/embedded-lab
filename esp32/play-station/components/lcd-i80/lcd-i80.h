@@ -39,6 +39,7 @@
 
 
 
+
 /*-------- 2. enum and define ----------------------------------------------------------------------------------------*/
 
 
@@ -46,10 +47,19 @@
 
 /*-------- 3. interface ----------------------------------------------------------------------------------------------*/
 
-void lcdInitBusIOAndPanel(esp_lcd_i80_bus_handle_t*, esp_lcd_panel_io_handle_t*, esp_lcd_panel_handle_t*);
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+    void lcdInitBusIOAndPanel(esp_lcd_i80_bus_handle_t*, esp_lcd_panel_io_handle_t*, esp_lcd_panel_handle_t*);
 
 
-void st7789Init();
+    void st7789Init(void);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 
 /*-------- 4. decorator ----------------------------------------------------------------------------------------------*/
