@@ -30,10 +30,13 @@
 
 /* ------- include ---------------------------------------------------------------------------------------------------*/
 
-#include "esp_log.h"
-#include "lcd-i80.h"
-#include "esp_lvgl_port.h"
+#include "applications/app-gamepad.h"
 #include "demos/benchmark/lv_demo_benchmark.h"
+#include "esp_log.h"
+#include "esp_lvgl_port.h"
+#include "lcd-i80.h"
+
+#include "applications/application-base.h"
 
 
 
@@ -118,6 +121,11 @@ extern "C" void app_main() {
 
         lvgl_port_unlock();
     }
+
+
+    GamepadApp::instance();
+
+    StaticAppBase::startApplications();
 
 
 
