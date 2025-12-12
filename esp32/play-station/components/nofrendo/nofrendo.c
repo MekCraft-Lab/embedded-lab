@@ -37,6 +37,7 @@
 
 /* emulated system includes */
 #include <nes.h>
+#include <string.h>
 
 /* our global machine structure */
 static struct

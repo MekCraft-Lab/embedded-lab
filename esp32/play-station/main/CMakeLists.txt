@@ -4,10 +4,13 @@ file(GLOB_RECURSE APPLICATIONS_SRCS
 )
 
 
-idf_component_register(SRCS "main.cpp"
+idf_component_register(SRCS
+        "main.cpp"
+        "sys_call.cpp"
         ${APPLICATIONS_SRCS}
 
         PRIV_REQUIRES
         lcd-i80
         gamepad
+        nofrendo
         INCLUDE_DIRS ".")
