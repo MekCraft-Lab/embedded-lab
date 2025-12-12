@@ -19,4 +19,8 @@ idf_component_register(
         "./mappers/"
         "./nes/"
         "./sndhrdw"
+
+        PRIV_REQUIRES
+        main
+        freertos
 )

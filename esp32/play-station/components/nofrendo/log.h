@@ -27,6 +27,9 @@
 #define _LOG_H_
 
 #include <stdio.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 extern int log_init(void);
 extern void log_shutdown(void);
@@ -34,6 +37,9 @@ extern int log_print(const char *string);
 extern int log_printf(const char *format, ...);
 extern void log_chain_logfunc(int (*logfunc)(const char *string));
 extern void log_assert(int expr, int line, const char *file, char *msg);
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _LOG_H_ */
 

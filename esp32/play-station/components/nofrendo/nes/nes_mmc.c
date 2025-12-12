@@ -3,14 +3,14 @@
 **
 **
 ** This program is free software; you can redistribute it and/or
-** modify it under the terms of version 2 of the GNU Library General 
+** modify it under the terms of version 2 of the GNU Library General
 ** Public License as published by the Free Software Foundation.
 **
-** This program is distributed in the hope that it will be useful, 
+** This program is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
-** Library General Public License for more details.  To obtain a 
-** copy of the GNU Library General Public License, write to the Free 
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** Library General Public License for more details.  To obtain a
+** copy of the GNU Library General Public License, write to the Free
 ** Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
 ** Any permitted reproduction of these routines, in whole or in part,
@@ -23,15 +23,18 @@
 ** $Id: nes_mmc.c,v 1.2 2001/04/27 14:37:11 neil Exp $
 */
 
-#include <string.h>
-#include <noftypes.h>
+#include "esp_log.h"
+
+
 #include "nes6502.h"
-#include <nes_mmc.h>
-#include <nes_ppu.h>
 #include <libsnss.h>
 #include <log.h>
 #include <mmclist.h>
+#include <nes_mmc.h>
+#include <nes_ppu.h>
 #include <nes_rom.h>
+#include <noftypes.h>
+#include <string.h>
 
 #define  MMC_8KROM         (mmc.cart->rom_banks * 2)
 #define  MMC_16KROM        (mmc.cart->rom_banks)
@@ -101,7 +104,7 @@ void mmc_bankvrom(int size, uint32 address, int bank)
       break;
 
    default:
-      log_printf("invalid VROM bank size %d\n", size);
+      ESP_LOGI("NES_MMC","invalid VROM bank size %d\n", size);
    }
 }
 
@@ -152,7 +155,7 @@ void mmc_bankrom(int size, uint32 address, int bank)
       break;
 
    default:
-      log_printf("invalid ROM bank size %d\n", size);
+      ESP_LOGI("NES_MMC","invalid ROM bank size %d\n", size);
       break;
    }
 
@@ -176,7 +179,7 @@ bool mmc_peek(int map_num)
 
 static void mmc_setpages(void)
 {
-   log_printf("setting up mapper %d\n", mmc.intf->number);
+   ESP_LOGI("NES_MMC","setting up mapper %d\n", mmc.intf->number);
 
    /* Switch ROM into CPU space, set VROM/VRAM (done for ALL ROMs) */
    mmc_bankrom(16, 0x8000, 0);
@@ -217,7 +220,7 @@ void mmc_reset(void)
    if (mmc.intf->init)
       mmc.intf->init();
 
-   log_printf("reset memory mapper\n");
+   ESP_LOGI("NES_MMC","reset memory mapper\n");
 }
 
 
@@ -249,7 +252,7 @@ mmc_t *mmc_create(rominfo_t *rominfo)
 
    mmc_setcontext(temp);
 
-   log_printf("created memory mapper: %s\n", (*map_ptr)->name);
+   ESP_LOGI("NES_MMC","created memory mapper: %s\n", (*map_ptr)->name);
 
    return temp;
 }

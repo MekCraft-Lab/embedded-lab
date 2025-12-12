@@ -25,6 +25,9 @@
 
 /* TODO: make this a generic ROM loading routine */
 
+#include "esp_log.h"
+
+
 #include <gui.h>
 #include <intro.h>
 #include <log.h>
@@ -37,7 +40,7 @@
 #include <stdio.h>
 #include <string.h>
 
-extern char* osd_getromdata();
+extern char* osd_getromdata(const char* filename);
 
 /* Max length for displayed filename */
 #define ROM_DISP_MAXLEN 20
@@ -96,7 +99,7 @@ static void rom_savesram(rominfo_t* rominfo) {
         if (NULL != fp) {
             fwrite(rominfo->sram, SRAM_BANK_LENGTH, rominfo->sram_banks, fp);
             fclose(fp);
-            log_printf("Wrote battery RAM to %s.\n", fn);
+            ESP_LOGI("NES_ROM","Wrote battery RAM to %s.\n", fn);
         }
     }
 }
@@ -116,7 +119,7 @@ static void rom_loadsram(rominfo_t* rominfo) {
         if (NULL != fp) {
             fread(rominfo->sram, SRAM_BANK_LENGTH, rominfo->sram_banks, fp);
             fclose(fp);
-            log_printf("Read battery RAM from %s.\n", fn);
+            ESP_LOGI("NES_ROM","Read battery RAM from %s.\n", fn);
         }
     }
 }
@@ -144,7 +147,7 @@ static void rom_loadtrainer(unsigned char** rom, rominfo_t* rominfo) {
         //      fread(rominfo->sram + TRAINER_OFFSET, TRAINER_LENGTH, 1, fp);
         memcpy(rominfo->sram + TRAINER_OFFSET, *rom, TRAINER_LENGTH);
         rom += TRAINER_LENGTH;
-        log_printf("Read in trainer at $7000\n");
+        ESP_LOGI("NES_ROM","Read in trainer at $7000\n");
     }
 }
 
@@ -219,7 +222,7 @@ static void rom_checkforpal(rominfo_t* rominfo) {
     rominfo->flags |= ROM_FLAG_VERSUS;
     /* TODO: bad, BAD idea, calling nes_getcontextptr... */
     ppu_setpal(nes_getcontextptr()->ppu, vs_pal);
-    log_printf("Game specific palette found -- assuming VS. UniSystem\n");
+    ESP_LOGI("NES_ROM","Game specific palette found -- assuming VS. UniSystem\n");
 }
 
 static FILE* rom_findrom(const char* filename, rominfo_t* rominfo) {
@@ -346,9 +349,9 @@ static int rom_getheader(unsigned char** rom, rominfo_t* rominfo) {
 
         /* @!?#@! DiskDude. */
         if (('D' == head.mapper_hinybble) && (0 == memcmp(head.reserved, "iskDude!", 8)))
-            log_printf("`DiskDude!' found in ROM header, ignoring high mapper nybble\n");
+            ESP_LOGI("NES_ROM","`DiskDude!' found in ROM header, ignoring high mapper nybble\n");
         else {
-            log_printf("ROM header dirty, possible problem\n");
+            ESP_LOGI("NES_ROM","ROM header dirty, possible problem\n");
             rominfo->mapper_number |= (head.mapper_hinybble & 0xF0);
         }
 
@@ -401,7 +404,11 @@ char* rom_getinfo(rominfo_t* rominfo) {
 
 /* Load a ROM image into memory */
 rominfo_t* rom_load(const char* filename) {
-    unsigned char* rom = (unsigned char*)osd_getromdata();
+    unsigned char* rom = (unsigned char*)osd_getromdata(filename);
+
+    if (!rom) {
+        return NULL;
+    }
     rominfo_t* rominfo;
 
     rominfo = malloc(sizeof(rominfo_t));
@@ -457,7 +464,7 @@ void rom_free(rominfo_t** rominfo) {
     if ((*rominfo)->flags & ROM_FLAG_VERSUS) {
         /* TODO: bad idea calling nes_getcontextptr... */
         ppu_setdefaultpal(nes_getcontextptr()->ppu);
-        log_printf("Default NES palette restored\n");
+        ESP_LOGI("NES_ROM","Default NES palette restored\n");
     }
 
     rom_savesram(*rominfo);

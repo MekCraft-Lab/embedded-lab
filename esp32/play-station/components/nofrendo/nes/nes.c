@@ -22,22 +22,26 @@
 ** NES hardware related routines
 ** $Id: nes.c,v 1.2 2001/04/27 14:37:11 neil Exp $
 */
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <noftypes.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "nes6502.h"
-#include <log.h>
-#include <osd.h>
+#include "portmacro.h"
+
+#include <noftypes.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include <gui.h>
+#include <log.h>
 #include <nes.h>
 #include <nes_apu.h>
+#include <nes_mmc.h>
 #include <nes_ppu.h>
 #include <nes_rom.h>
-#include <nes_mmc.h>
-#include <vid_drv.h>
 #include <nofrendo.h>
+#include <osd.h>
+#include <vid_drv.h>
 
 
 #define  NES_CLOCK_DIVIDER    12
@@ -368,6 +372,8 @@ void nes_emulate(void)
    nes.scanline_cycles = 0;
    nes.fiq_cycles = (int) NES_FIQ_PERIOD;
 
+    TickType_t nesTick = xTaskGetTickCount();
+
    while (false == nes.poweroff)
    {
       if (nofrendo_ticks != last_ticks)
@@ -388,16 +394,20 @@ void nes_emulate(void)
       else if (frames_to_render > 1)
       {
          frames_to_render--;
+
          nes_renderframe(false);
          system_video(false);
       }
       else if ((1 == frames_to_render && true == nes.autoframeskip)
                || false == nes.autoframeskip)
       {
+
          frames_to_render = 0;
          nes_renderframe(true);
          system_video(true);
       }
+
+       vTaskDelayUntil(&nesTick, 16);
    }
 }
 

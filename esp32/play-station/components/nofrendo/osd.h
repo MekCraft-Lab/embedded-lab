@@ -52,6 +52,9 @@
 #define stricmp strcasecmp
 #endif /* !WIN32 && !__DJGPP__ */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 extern void osd_setsound(void (*playfunc)(void *buffer, int size));
 
@@ -73,27 +76,31 @@ typedef struct sndinfo_s
 } sndinfo_t;
 
 /* get info */
-extern void osd_getvideoinfo(vidinfo_t *info);
-extern void osd_getsoundinfo(sndinfo_t *info);
+void osd_getvideoinfo(vidinfo_t *info);
+void osd_getsoundinfo(sndinfo_t *info);
 
 /* init / shutdown */
-extern int osd_init(void);
-extern void osd_shutdown(void);
-extern int osd_main(int argc, char *argv[]);
+int osd_init(void);
+void osd_shutdown(void);
+int osd_main(int argc, char *argv[]);
 
-extern int osd_installtimer(int frequency, void *func, int funcsize,
+int osd_installtimer(int frequency, void *func, int funcsize,
                             void *counter, int countersize);
 
 /* filename manipulation */
-extern void osd_fullname(char *fullname, const char *shortname);
-extern char *osd_newextension(char *string, char *ext);
+void osd_fullname(char *fullname, const char *shortname);
+char *osd_newextension(char *string, char *ext);
 
 /* input */
-extern void osd_getinput(void);
-extern void osd_getmouse(int *x, int *y, int *button);
+void osd_getinput(void);
+void osd_getmouse(int *x, int *y, int *button);
 
 /* build a filename for a snapshot, return -ve for error */
-extern int osd_makesnapname(char *filename, int len);
+int osd_makesnapname(char *filename, int len);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !NSF_PLAYER */
 
