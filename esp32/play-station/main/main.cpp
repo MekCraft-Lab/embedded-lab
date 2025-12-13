@@ -37,6 +37,8 @@
 #include "demos/benchmark/lv_demo_benchmark.h"
 #include "esp_log.h"
 #include "esp_lvgl_port.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 
 #include "applications/application-base.h"
@@ -72,7 +74,9 @@ TickType_t sysTick;
 
 /* ------- function implement ----------------------------------------------------------------------------------------*/
 
-
+char buffer[512];
+uint8_t checkFlag = 0;
+extern uint32_t fps;
 extern "C" void app_main() {
 
     GamepadApp::instance();
@@ -85,5 +89,20 @@ extern "C" void app_main() {
     StaticAppBase::startApplications();
 
 
-    vTaskDelete(nullptr);
+
+    for (;;) {
+
+
+        static uint32_t lastFlag = 0;
+
+        lastFlag = fps;
+
+        vTaskDelay(500);
+        //
+        // vTaskList(buffer);
+        // printf("%s", buffer);
+    }
+
+    vTaskDelete(NULL);
+
 }

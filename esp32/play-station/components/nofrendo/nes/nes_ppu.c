@@ -701,7 +701,7 @@ INLINE int draw_oamtile(uint8 *surface, uint8 attrib, uint8 pat1,
 static void ppu_renderbg(uint8 *vidbuf)
 {
 
-    ESP_LOGI("NES-PPU", "ppu_renderbg绘制的背景地址为：%p", vidbuf);
+
    uint8 *bmp_ptr, *data_ptr, *tile_ptr, *attrib_ptr;
    uint32 refresh_vaddr, bg_offset, attrib_base;
    int tile_count;
@@ -711,7 +711,7 @@ static void ppu_renderbg(uint8 *vidbuf)
    /* draw a line of transparent background color if bg is disabled */
    if (false == ppu.bg_on)
    {
-       ESP_LOGI("NEW-PPU", "背景关闭");
+
       memset(vidbuf, FULLBG, NES_SCREEN_WIDTH);
       return;
    }

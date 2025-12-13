@@ -92,7 +92,7 @@ void osd_fullname(char *fullname, const char *shortname);
 char *osd_newextension(char *string, char *ext);
 
 /* input */
-void osd_getinput(void);
+void osd_getinput();
 void osd_getmouse(int *x, int *y, int *button);
 
 /* build a filename for a snapshot, return -ve for error */

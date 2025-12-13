@@ -223,6 +223,6 @@ extern "C" char *osd_getromdata(const char* filename) {
     return buf;
 }
 
-extern "C" void osd_getinput(void){}
+
 
 extern "C" void osd_getmouse(int *x, int *y, int *button){}

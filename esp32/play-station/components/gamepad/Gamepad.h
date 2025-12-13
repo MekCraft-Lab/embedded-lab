@@ -56,7 +56,7 @@ class Gamepad {
     bool getRightUp() const { return _gamePadRaw.dpad == 2; }
     bool getRight() const { return _gamePadRaw.dpad == 3; }
     bool getRightDown() const { return _gamePadRaw.dpad == 4; }
-    bool getDonw() const { return _gamePadRaw.dpad == 5; }
+    bool getDown() const { return _gamePadRaw.dpad == 5; }
     bool getLeftDown() const { return _gamePadRaw.dpad == 6; }
     bool getLeft() const { return _gamePadRaw.dpad == 7; }
     bool getLeftUp() const { return _gamePadRaw.dpad == 8; }
@@ -75,7 +75,6 @@ class Gamepad {
 
   private:
     __packed struct {
-        uint8_t reverse0;
         uint16_t leftJoyStickX;
         uint16_t leftJoyStickY;
         uint16_t rightJoyStickX;
@@ -85,15 +84,15 @@ class Gamepad {
         uint16_t rightTrigger;
 
         uint8_t dpad;
-        uint32_t L1       : 1;
-        uint32_t R1       : 1;
+        uint32_t buttonA       : 1;
+        uint32_t buttonB       : 1;
         uint32_t reverse1  : 1;
         uint32_t buttonY  : 1;
 
         uint32_t buttonX  : 1;
         uint32_t reverse2 : 1;
-        uint32_t buttonB  : 1;
-        uint32_t buttonA  : 1;
+        uint32_t L1  : 1;
+        uint32_t R1  : 1;
 
         uint32_t reverse3 : 1;
         uint32_t rPress   : 1;

@@ -378,6 +378,9 @@ void nes_emulate(void)
    {
       if (nofrendo_ticks != last_ticks)
       {
+          extern uint32_t fps;
+
+          fps++;
          int tick_diff = nofrendo_ticks - last_ticks;
 
          frames_to_render += tick_diff;
@@ -406,8 +409,8 @@ void nes_emulate(void)
          nes_renderframe(true);
          system_video(true);
       }
-
        vTaskDelayUntil(&nesTick, 16);
+
    }
 }
 

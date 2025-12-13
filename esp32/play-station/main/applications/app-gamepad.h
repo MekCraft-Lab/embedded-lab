@@ -41,6 +41,7 @@
 
 /* III. middlewares */
 
+#include "event.h"
 
 /* IV. drivers */
 
@@ -75,9 +76,9 @@ class GamepadApp :public StaticAppBase {
     static GamepadApp& instance();
 
 
+    Gamepad gamepad;
   private:
 
-    Gamepad _gamepad;
 
     /* message interface */
     
@@ -109,7 +110,7 @@ extern "C" {
 #endif
 
 
-
+extern "C" void osd_getinput();
 
 /*-------- 4. decorator ----------------------------------------------------------------------------------------------*/
 
