@@ -37,7 +37,8 @@ enable_language(C ASM)
 add_executable(${CMAKE_PROJECT_NAME}
         User/Application/app-main.cpp
         User/Application/app-main.h
-        User/Application/app-asciiProcess.cpp)
+        User/Application/app-asciiProcess.cpp
+        User/Application/app-iic.cpp)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)

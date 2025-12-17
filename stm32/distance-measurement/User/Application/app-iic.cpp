@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file    app-asciiProcess.cpp
+ * @file    app-iic.cpp
  * @brief   简要描述
  *******************************************************************************
  * @attention
@@ -34,7 +34,11 @@
 
 /* I. header */
 
-#include "app-asciiProcess.h"
+#include "app-iic.h"
+
+#include "i2c.h"
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal_i2c.h"
 
 /* II. other application */
 
@@ -57,10 +61,9 @@
 
 /* ------- variables -------------------------------------------------------------------------------------------------*/
 
-uint8_t uart4_rxbuf[256] = {0};
+static TickType_t appTicks;
 
-uint8_t uart5_rxbuf[256] = {0};
-
+uint8_t iic1_rxbuf[16];
 
 
 
@@ -68,7 +71,7 @@ uint8_t uart5_rxbuf[256] = {0};
 
 #define APPLICATION_ENABLE     true
 
-#define APPLICATION_NAME       "AsciiProcess"
+#define APPLICATION_NAME       "Iic"
 
 #define APPLICATION_STACK_SIZE 512
 
@@ -76,12 +79,13 @@ uint8_t uart5_rxbuf[256] = {0};
 
 static StackType_t appStack[APPLICATION_STACK_SIZE];
 
-static AsciiProcessApp asciProcessApp;
+static IicApp iicApp;
 
 
 
 
 /* ------- message interface attribute -------------------------------------------------------------------------------*/
+
 
 
 
@@ -96,49 +100,65 @@ static AsciiProcessApp asciProcessApp;
 /* ------- function implement ----------------------------------------------------------------------------------------*/
 
 
-AsciiProcessApp::AsciiProcessApp()
-    : StaticAppBase(APPLICATION_ENABLE, APPLICATION_NAME, APPLICATION_STACK_SIZE, appStack, APPLICATION_PRIORITY, 0,
-                    nullptr) {}
+IicApp::IicApp()
+    : StaticAppBase(APPLICATION_ENABLE, APPLICATION_NAME, APPLICATION_STACK_SIZE,  appStack, APPLICATION_PRIORITY, 0, nullptr){
+}
 
 
-AsciiProcessApp& AsciiProcessApp::instance() { return asciProcessApp; }
+IicApp& IicApp::instance() {
+    return iicApp;
+}
 
 
-void AsciiProcessApp::init() {
+void IicApp::init() {
     /* driver object initialize */
 
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart4, uart4_rxbuf, 256);
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rxbuf, 256);
 }
 
 
-void AsciiProcessApp::run() { vTaskDelay(20); }
+void IicApp::run() {
+
+    appTicks = xTaskGetTickCount();
+
+
+    //HAL_I2C_Mem_Read_IT(&hi2c1, 0x6C, 0x03, I2C_MEMADD_SIZE_8BIT, iic1_rxbuf, 8);
+    uint8_t addr = 0x03;
+    HAL_I2C_Master_Transmit_DMA(&hi2c1, 0xD8, &addr, 1);
+    xSemaphoreTake(_txCpltSemaphore, portMAX_DELAY);
+    HAL_I2C_Master_Receive_DMA(&hi2c1, 0xD9, &iic1_rxbuf[0], 16);
+
+    uint16_t distance = iic1_rxbuf[0] | iic1_rxbuf[1] << 8;
+
+
+    vTaskDelayUntil(&appTicks, 100);
+ 
+}
 
 
 
-uint8_t AsciiProcessApp::rxMsg(void* msg, uint16_t size) { return 0; }
+uint8_t IicApp::rxMsg(void* msg, uint16_t size) {
 
-uint8_t AsciiProcessApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) { return 0; }
+    return 0;
+}
 
+uint8_t IicApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) {
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t size) {
+    return 0;
+}
 
-    switch ((uint32_t)huart->Instance) {
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef* hi2c) {
+    if (hi2c == &hi2c1) {
+        BaseType_t pxHigher;
+        xSemaphoreGiveFromISR(IicApp::instance()._txCpltSemaphore, &pxHigher);
 
-
-        case UART4_BASE: {
-
-            HAL_UARTEx_ReceiveToIdle_DMA(&huart4, uart4_rxbuf, 256);
-
-        } break;
-
-        case UART5_BASE: {
-
-            HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rxbuf, 256);
-
-        } break;
-
-        default: {
-        }
     }
 }
+
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef* hi2c) {
+    if (hi2c == &hi2c1) {
+        BaseType_t pxHigher;
+        xSemaphoreGiveFromISR(IicApp::instance()._txCpltSemaphore, &pxHigher);
+
+    }
+}
+

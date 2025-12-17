@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file    app-asciiProcess.h
+ * @file    app-iic.h
  * @brief   简要描述
  *******************************************************************************
  * @attention
@@ -22,10 +22,8 @@
 
 /* Define to prevent recursive inclusion -----------------------------------------------------------------------------*/
 
-#ifndef DISTANCE_MEASUREMENT_APP_ASCIIPROCESS_H
-#define DISTANCE_MEASUREMENT_APP_ASCIIPROCESS_H
-
-
+#ifndef DISTANCE_MEASUREMENT_APP_IIC_H
+#define DISTANCE_MEASUREMENT_APP_IIC_H
 
 
 /*-------- 1. includes and imports -----------------------------------------------------------------------------------*/
@@ -35,6 +33,7 @@
 /* I. interface */
 
 #include "application-base.h"
+#include "semphr.h"
 
 /* II. OS */
 
@@ -43,8 +42,10 @@
 
 
 /* IV. drivers */
+#include  "stm32f4xx_hal.h"
+#include "stm32f4xx_hal_i2c.h"
 
-#include "usart.h"
+
 
 
 /* V. standard lib */
@@ -60,9 +61,9 @@
 
 /*-------- 3. interface ---------------------------------------------------------------------------------------------*/
 
-class AsciiProcessApp final : public StaticAppBase {
+class IicApp final : public StaticAppBase {
   public:
-    AsciiProcessApp();
+    IicApp();
 
     void init() override;
 
@@ -73,7 +74,7 @@ class AsciiProcessApp final : public StaticAppBase {
     uint8_t rxMsg(void *msg, uint16_t size, TickType_t timeout)  override;
 
     /************ setter & getter ***********/
-    static AsciiProcessApp& instance();
+    static IicApp& instance();
 
 
   private:
@@ -84,13 +85,14 @@ class AsciiProcessApp final : public StaticAppBase {
     // 2. mutex
     
     // 3. semphr
-    
+    xSemaphoreHandle _txCpltSemaphore;
     // 4. notify
     
     // 5. stream or message
     
     // 6. event group
-
+    friend void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c);
+    friend void HAL_I2C_ErrorCallback(I2C_HandleTypeDef* hi2c);
 };
 #endif
 
@@ -100,10 +102,8 @@ extern "C" {
 #endif
 
     /* C Interface */
-
-    void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size);
-
-
+    void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c);
+    void HAL_I2C_ErrorCallback(I2C_HandleTypeDef* hi2c) ;
 #ifdef __cplusplus
 }
 #endif
