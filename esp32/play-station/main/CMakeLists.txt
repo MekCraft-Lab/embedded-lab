@@ -10,7 +10,9 @@ idf_component_register(SRCS
         ${APPLICATIONS_SRCS}
 
         PRIV_REQUIRES
+        esp_wifi_remote
         lcd-i80
+        nvs_flash
         gamepad
         nofrendo
         INCLUDE_DIRS ".")

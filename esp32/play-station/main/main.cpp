@@ -34,6 +34,7 @@
 #include "applications/app-filesys.h"
 #include "applications/app-gamepad.h"
 #include "applications/app-nofrendo.h"
+#include "applications/app-wifi.h"
 #include "demos/benchmark/lv_demo_benchmark.h"
 #include "esp_log.h"
 #include "esp_lvgl_port.h"
@@ -85,6 +86,7 @@ extern "C" void app_main() {
     FilesysApp::instance();
     // AudioApp::instance();
     DisplayApp::instance();
+	WifiApp::instance();
 
     StaticAppBase::startApplications();
 
