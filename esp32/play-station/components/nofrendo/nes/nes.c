@@ -398,8 +398,8 @@ void nes_emulate(void)
       {
          frames_to_render--;
 
-         nes_renderframe(false);
-         system_video(false);
+         nes_renderframe(true);
+         system_video(true);
       }
       else if ((1 == frames_to_render && true == nes.autoframeskip)
                || false == nes.autoframeskip)
