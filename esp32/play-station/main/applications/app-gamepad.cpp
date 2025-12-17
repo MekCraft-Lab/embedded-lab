@@ -25,7 +25,7 @@
 /* ------- define ----------------------------------------------------------------------------------------------------*/
 
 #define UART_NUM       UART_NUM_1
-#define UART_RX_PIN    22
+#define UART_RX_PIN    12
 #define UART_BAUD_RATE 921600
 #define BUF_SIZE       16
 
@@ -57,6 +57,13 @@
 
 /* ------- macro -----------------------------------------------------------------------------------------------------*/
 
+#define DISPATCH_BTN(cur, last, evt)                                                                                   \
+    do {                                                                                                               \
+        if ((cur) != (last)) {                                                                                         \
+            event_get(evt)((cur) ? 1 : 0);                                                  \
+            (last) = (cur);                                                                                            \
+        }                                                                                                              \
+    } while (0)
 
 
 
@@ -141,8 +148,9 @@ void GamepadApp::run() {
 
         if (event.type == UART_DATA) {
             // event.size 指示 RX buffer 当前可读字节数
-            uart_read_bytes(UART_NUM, _gamepad.getBufferPointer(), event.size >= 16 ? 16 : event.size,
-                                      pdMS_TO_TICKS(100));
+            uart_read_bytes(UART_NUM, gamepad.getBufferPointer(), event.size >= 16 ? 16 : event.size,
+                            pdMS_TO_TICKS(100));
+            static uint8_t i;
         }
     }
 }
@@ -152,3 +160,31 @@ void GamepadApp::run() {
 uint8_t GamepadApp::rxMsg(void* msg, uint16_t size) { return 0; }
 
 uint8_t GamepadApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) { return 0; }
+
+extern uint8_t checkFlag;
+extern "C" void osd_getinput(void) {
+    uint8_t A, B, RB, LB, Up, Down, Left, Right;
+    A     = GamepadApp::instance().gamepad.getA();
+    B     = GamepadApp::instance().gamepad.getB();
+    RB    = GamepadApp::instance().gamepad.getRB();
+    LB    = GamepadApp::instance().gamepad.getLB();
+    Up    = GamepadApp::instance().gamepad.getUp();
+    Down  = GamepadApp::instance().gamepad.getDown();
+    Left  = GamepadApp::instance().gamepad.getLeft();
+    Right = GamepadApp::instance().gamepad.getRight();
+
+    /* 保存上一次状态（static，零内存抖动） */
+    static uint8_t lastA, lastB, lastRB, lastLB;
+    static uint8_t lastUp, lastDown, lastLeft, lastRight;
+
+    /* 只在状态变化时发送事件 */
+    DISPATCH_BTN(A,     lastA,     44); // A
+    DISPATCH_BTN(B,     lastB,     45); // B
+    DISPATCH_BTN(RB,    lastRB,    46); // Start
+    DISPATCH_BTN(LB,    lastLB,    47); // Select
+    DISPATCH_BTN(Up,    lastUp,    48);
+    DISPATCH_BTN(Down,  lastDown,  49);
+    DISPATCH_BTN(Left,  lastLeft,  50);
+    DISPATCH_BTN(Right, lastRight, 51);
+
+}

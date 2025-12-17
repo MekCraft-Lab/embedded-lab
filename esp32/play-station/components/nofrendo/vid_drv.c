@@ -3,14 +3,14 @@
 **
 **
 ** This program is free software; you can redistribute it and/or
-** modify it under the terms of version 2 of the GNU Library General 
+** modify it under the terms of version 2 of the GNU Library General
 ** Public License as published by the Free Software Foundation.
 **
-** This program is distributed in the hope that it will be useful, 
+** This program is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
-** Library General Public License for more details.  To obtain a 
-** copy of the GNU Library General Public License, write to the Free 
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** Library General Public License for more details.  To obtain a
+** copy of the GNU Library General Public License, write to the Free
 ** Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
 ** Any permitted reproduction of these routines, in whole or in part,
@@ -23,13 +23,16 @@
 ** $Id: vid_drv.c,v 1.2 2001/04/27 14:37:11 neil Exp $
 */
 
-#include <string.h>
-#include <noftypes.h>
-#include <log.h>
+#include "esp_log.h"
+
+
 #include <bitmap.h>
-#include <vid_drv.h>
 #include <gui.h>
+#include <log.h>
+#include <noftypes.h>
 #include <osd.h>
+#include <string.h>
+#include <vid_drv.h>
 
 /* hardware surface */
 static bitmap_t *screen = NULL;
@@ -370,6 +373,7 @@ int vid_setmode(int width, int height)
 //   if (NULL != back_buffer)
 //      bmp_destroy(&back_buffer);
 
+    ESP_LOGI("VID-DRV", "Creating primary_buffer, width: %d, height: %d", width, height);
    primary_buffer = bmp_create(width, height, 0); /* no overdraw */
    if (NULL == primary_buffer)
       return -1;

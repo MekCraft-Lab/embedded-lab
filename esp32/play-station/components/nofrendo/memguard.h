@@ -30,6 +30,8 @@
 #undef strdup
 #endif
 
+#if 0
+
 #ifdef NOFRENDO_DEBUG
 
 #define  malloc(s)   _my_malloc((s), __FILE__, __LINE__)
@@ -92,3 +94,4 @@ extern bool mem_debug;
 ** initial revision
 **
 */
+#endif

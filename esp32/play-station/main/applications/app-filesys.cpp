@@ -138,6 +138,9 @@ FilesysApp& FilesysApp::instance() {
 uint8_t fileBuf[128] = {0};
 void FilesysApp::init() {
     /* driver object initialize */
+
+    _filesysSemaphore = xSemaphoreCreateBinary();
+
     init_littlefs();
 
 
@@ -149,11 +152,13 @@ void FilesysApp::init() {
 
     listFiles(nullptr);
 
+    xSemaphoreGive(_filesysSemaphore);
+
 }
 
 
 void FilesysApp::run() {
-    vTaskDelete(NULL);
+    vTaskDelay(1);
 }
 
 
@@ -222,6 +227,4 @@ uint8_t FilesysApp::rxMsg(void* msg, uint16_t size, TickType_t timeout) {
 
     return 0;
 }
-
-
 

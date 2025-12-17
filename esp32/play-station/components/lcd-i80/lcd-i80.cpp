@@ -65,7 +65,7 @@ extern "C" void lcdInitBusIOAndPanel(esp_lcd_i80_bus_handle_t* pBusHandle, esp_l
         .clk_src            = LCD_CLK_SRC_DEFAULT,
         .data_gpio_nums     = {D0_PIN, D1_PIN, D2_PIN, D3_PIN, D4_PIN, D5_PIN, D6_PIN, D7_PIN}, // D0~D7
         .bus_width          = 8,
-        .max_transfer_bytes = 240 * 40 * 2, // 每次 DMA 最大传输
+        .max_transfer_bytes = 131072, // 每次 DMA 最大传输
     };
     esp_lcd_new_i80_bus(&busConfig, pBusHandle);
 

@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file    app-gamepad.h
+ * @file    app-nofrendo.h
  * @brief   简要描述
  *******************************************************************************
  * @attention
@@ -14,7 +14,7 @@
  *
  *******************************************************************************
  * @author  MekLi
- * @date    2025/12/11
+ * @date    2025/12/12
  * @version 1.0
  *******************************************************************************
  */
@@ -22,8 +22,8 @@
 
 /* Define to prevent recursive inclusion -----------------------------------------------------------------------------*/
 
-#ifndef PLAY_STATION_APP_GAMEPAD_H_H
-#define PLAY_STATION_APP_GAMEPAD_H_H
+#ifndef PLAY_STATION_APP_NOFRENDO_H
+#define PLAY_STATION_APP_NOFRENDO_H
 
 
 
@@ -37,18 +37,18 @@
 #include "application-base.h"
 
 /* II. OS */
+#include "freertos/semphr.h"
 
 
 /* III. middlewares */
 
-#include "event.h"
 
 /* IV. drivers */
+#include "osd.h"
+#include "noftypes.h"
 
-#include "Gamepad.h"
 
 /* V. standard lib */
-
 
 
 
@@ -60,9 +60,9 @@
 
 /*-------- 3. interface ---------------------------------------------------------------------------------------------*/
 
-class GamepadApp :public StaticAppBase {
+class NofrendoApp final : public StaticAppBase {
   public:
-    GamepadApp();
+    NofrendoApp();
 
     void init() override;
 
@@ -70,30 +70,27 @@ class GamepadApp :public StaticAppBase {
 
     uint8_t rxMsg(void* msg, uint16_t size = 0) override;
 
-    uint8_t rxMsg(void *msg, uint16_t size, TickType_t timeout)  override;
+    uint8_t rxMsg(void* msg, uint16_t size, TickType_t timeout) override;
 
     /************ setter & getter ***********/
-    static GamepadApp& instance();
+    static NofrendoApp& instance();
 
 
-    Gamepad gamepad;
   private:
-
-
     /* message interface */
-    
+
     // 1. message queue
-    QueueHandle_t _rxQueue;
-    
+
     // 2. mutex
-    
+
     // 3. semphr
-    
+
     // 4. notify
-    
+
     // 5. stream or message
-    
+
     // 6. event group
+
 
 };
 #endif
@@ -103,14 +100,13 @@ class GamepadApp :public StaticAppBase {
 extern "C" {
 #endif
 
-    /* C Interface */
+/* C Interface */
 
 #ifdef __cplusplus
 }
 #endif
 
 
-extern "C" void osd_getinput();
 
 /*-------- 4. decorator ----------------------------------------------------------------------------------------------*/
 

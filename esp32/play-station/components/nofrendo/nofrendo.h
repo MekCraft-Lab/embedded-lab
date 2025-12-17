@@ -36,6 +36,11 @@ typedef enum
    NUM_SUPPORTED_SYSTEMS
 } system_t;
 
+#ifdef __cplusplus
+extern "C" {
+
+#endif
+
 int nofrendo_main(int argc, char *argv[]);
 
 
@@ -50,6 +55,10 @@ extern int main_loop(const char *filename, system_t type);
 extern void main_insert(const char *filename, system_t type);
 extern void main_eject(void);
 extern void main_quit(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_NOFRENDO_H_ */
 

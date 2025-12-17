@@ -29,6 +29,10 @@
 
 #include <nofrendo.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum
 {
    event_none = 0,
@@ -122,6 +126,10 @@ extern void event_init(void);
 extern void event_set(int index, event_t handler);
 extern event_t event_get(int index);
 extern void event_set_system(system_t type);
+
+#ifdef __cplusplus
+    }
+#endif
 
 #endif /* !_EVENT_H_ */
 

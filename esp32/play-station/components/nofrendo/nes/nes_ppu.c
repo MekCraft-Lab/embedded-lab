@@ -3,14 +3,14 @@
 **
 **
 ** This program is free software; you can redistribute it and/or
-** modify it under the terms of version 2 of the GNU Library General 
+** modify it under the terms of version 2 of the GNU Library General
 ** Public License as published by the Free Software Foundation.
 **
-** This program is distributed in the hope that it will be useful, 
+** This program is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
-** Library General Public License for more details.  To obtain a 
-** copy of the GNU Library General Public License, write to the Free 
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** Library General Public License for more details.  To obtain a
+** copy of the GNU Library General Public License, write to the Free
 ** Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
 ** Any permitted reproduction of these routines, in whole or in part,
@@ -23,15 +23,18 @@
 ** $Id: nes_ppu.c,v 1.2 2001/04/27 14:37:11 neil Exp $
 */
 
-#include <string.h>
-#include <stdlib.h>
-#include <noftypes.h>
-#include <nes_ppu.h>
-#include <nes.h>
-#include <gui.h>
+#include "esp_log.h"
+
+
 #include "nes6502.h"
+#include <gui.h>
 #include <log.h>
+#include <nes.h>
 #include <nes_mmc.h>
+#include <nes_ppu.h>
+#include <noftypes.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include <bitmap.h>
 #include <vid_drv.h>
@@ -579,6 +582,8 @@ void ppu_setvromswitch(ppuvromswitch_t func)
 INLINE void draw_bgtile(uint8 *surface, uint8 pat1, uint8 pat2, 
                         const uint8 *colors)
 {
+
+
    uint32 pattern = ((pat2 & 0xAA) << 8) | ((pat2 & 0x55) << 1)
                     | ((pat1 & 0xAA) << 7) | (pat1 & 0x55);
    
@@ -695,6 +700,8 @@ INLINE int draw_oamtile(uint8 *surface, uint8 attrib, uint8 pat1,
 
 static void ppu_renderbg(uint8 *vidbuf)
 {
+
+
    uint8 *bmp_ptr, *data_ptr, *tile_ptr, *attrib_ptr;
    uint32 refresh_vaddr, bg_offset, attrib_base;
    int tile_count;
@@ -704,6 +711,7 @@ static void ppu_renderbg(uint8 *vidbuf)
    /* draw a line of transparent background color if bg is disabled */
    if (false == ppu.bg_on)
    {
+
       memset(vidbuf, FULLBG, NES_SCREEN_WIDTH);
       return;
    }
@@ -728,6 +736,8 @@ static void ppu_renderbg(uint8 *vidbuf)
    {
       /* Tile number from nametable */
       tile_index = *tile_ptr++;
+
+
       data_ptr = &PPU_MEM(bg_offset + (tile_index << 4));
 
       /* Handle $FD/$FE tile VROM switching (PunchOut) */
@@ -735,6 +745,8 @@ static void ppu_renderbg(uint8 *vidbuf)
          ppu.latchfunc(ppu.bg_base, tile_index);
 
       draw_bgtile(bmp_ptr, data_ptr[0], data_ptr[8], ppu.palette + col_high);
+
+
       bmp_ptr += 8;
 
       x_tile++;
@@ -1012,6 +1024,11 @@ bool ppu_enabled(void)
 static void ppu_renderscanline(bitmap_t *bmp, int scanline, bool draw_flag)
 {
    uint8 *buf = bmp->line[scanline];
+
+    if (buf == NULL) {
+        ESP_LOGE("NES-PPU", "bitmap->line[%d]为空", scanline);
+        return;
+    }
 
    /* start scanline - transfer ppu latch into vaddr */
    if (ppu.bg_on || ppu.obj_on)
