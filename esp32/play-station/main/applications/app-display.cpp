@@ -223,15 +223,9 @@ uint32_t fps;
 void DisplayApp::run() {
 
     if (xSemaphoreTake(_nofrendoUpdate, portMAX_DELAY) == pdPASS) {
-
-
         static uint8_t i;
         gpio_set_level(GPIO_NUM_17, i++%2); // 初始低电平
-
             esp_lcd_panel_draw_bitmap(panelHandle, 0, 0, 240, 240, frameBuffer);
-
-
-
 
     }
 }
