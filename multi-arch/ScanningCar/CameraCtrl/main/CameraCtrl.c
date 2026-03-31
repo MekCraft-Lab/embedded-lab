@@ -1,87 +1,182 @@
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "driver/ledc.h"
-#include "driver/gpio.h"
+#include "esp_event.h"
 #include "esp_log.h"
-// 引入新移植的组件头文件
-#include "driver/i2c_master.h"
-#include "esp_cam_sensor.h"
-#include "imx219.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/event_groups.h"
+#include "freertos/task.h"
+#include "injected/esp_wifi.h"
+#include "injected/esp_wifi_types_generic.h"
+#include "lwip/sockets.h"
+#include "nvs_flash.h"
 
-static const char *TAG = "IMX219_Test";
+#include <stdatomic.h>
+#include <string.h>
 
-// 你开发板的引脚
-#define CAM_PWDN_IO             0
-#define CAM_XCLK_IO             1
-#define I2C_MASTER_SDA_IO       7
-#define I2C_MASTER_SCL_IO       8
+// ================== 请在这里配置你的测试参数 ==================
+#define TEST_WIFI_SSID      "TJURM"      // 你的路由器 Wi-Fi 名称
+#define TEST_WIFI_PASS      "tjurm2020"  // 你的路由器 Wi-Fi 密码
+#define DEST_SERVER_IP      "192.168.28.253"       // 运行 Python 接收端的电脑 IP
+#define DEST_SERVER_PORT    5001                  // 目标端口
+#define PAYLOAD_SIZE        1460                  // UDP MTU 优化大小
+// ==============================================================
 
-// 必须保留的硬件时钟与高电平唤醒逻辑
-void imx219_hardware_init(void) {
-    ESP_LOGI(TAG, "启动 IMX219 24MHz时钟与高电平唤醒...");
-    gpio_config_t io_conf = {
-        .pin_bit_mask = (1ULL << CAM_PWDN_IO),
-        .mode = GPIO_MODE_OUTPUT,
-    };
-    gpio_config(&io_conf);
+static const char *TAG = "SPI_STRESS_TEST";
 
-    gpio_set_level(CAM_PWDN_IO, 0);
-    vTaskDelay(pdMS_TO_TICKS(50));
-    gpio_set_level(CAM_PWDN_IO, 1);
+// 事件标志
+static EventGroupHandle_t wifi_event_group;
+const int CONNECTED_BIT = BIT0;
 
-    ledc_timer_config_t ledc_timer = {
-        .speed_mode       = LEDC_LOW_SPEED_MODE,
-        .timer_num        = LEDC_TIMER_0,
-        .duty_resolution  = LEDC_TIMER_1_BIT,
-        .freq_hz          = 24000000,
-        .clk_cfg          = LEDC_AUTO_CLK
-    };
-    ESP_ERROR_CHECK(ledc_timer_config(&ledc_timer));
+// 全局原子计数器，用于跨任务安全地统计发送字节数
+volatile uint64_t total_bytes_sent = 0;
 
-    ledc_channel_config_t ledc_channel = {
-        .speed_mode     = LEDC_LOW_SPEED_MODE,
-        .channel        = LEDC_CHANNEL_0,
-        .timer_sel      = LEDC_TIMER_0,
-        .intr_type      = LEDC_INTR_DISABLE,
-        .gpio_num       = CAM_XCLK_IO,
-        .duty           = 1,
-        .hpoint         = 0
-    };
-    ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));
-    vTaskDelay(pdMS_TO_TICKS(150));
+/* ------------------------------------------------------------------
+ * 1. Wi-Fi 事件回调处理
+ * ------------------------------------------------------------------ */
+static void event_handler(void* arg, esp_event_base_t event_base,
+                                int32_t event_id, void* event_data)
+{
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        ESP_LOGI(TAG, "Wi-Fi 驱动已启动，正在尝试连接 AP...");
+        esp_wifi_connect();
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+        ESP_LOGW(TAG, "连接断开，正在重试...");
+        xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+        esp_wifi_connect();
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
+        ESP_LOGI(TAG, "🟢 成功连接路由器！获取到 IP 地址: " IPSTR, IP2STR(&event->ip_info.ip));
+        xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+    }
 }
 
+/* ------------------------------------------------------------------
+ * 2. 吞吐量实时监控任务 (每 100ms 更新一次)
+ * ------------------------------------------------------------------ */
+void throughput_monitor_task(void *pvParameters) {
+    uint64_t last_bytes = 0;
+    double mbps_sum = 0;
+    int tick_count = 0;
+
+    ESP_LOGI(TAG, "监控任务已启动，等待数据流...");
+
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(100)); // 精确的 100ms 采样周期
+
+        uint64_t current_bytes = __atomic_load_n(&total_bytes_sent, __ATOMIC_RELAXED);
+        uint64_t diff_bytes = current_bytes - last_bytes;
+        last_bytes = current_bytes;
+
+        // 计算 100ms 内的即时速率 (Mbps)
+        // 公式: (字节数 * 8位) / (0.1秒 * 1024 * 1024)
+        double current_mbps = (diff_bytes * 8.0) / (0.1 * 1024 * 1024);
+
+        // 只有当有数据流动时才打印，避免刷屏
+        if (current_mbps > 0.1) {
+            ESP_LOGI("PERF_100ms", "即时速率: %6.2f Mbps", current_mbps);
+
+            mbps_sum += current_mbps;
+            tick_count++;
+
+            // 每 10 次 (即 1 秒) 打印一次平均速率
+            if (tick_count >= 10) {
+                ESP_LOGW("PERF_1Sec", "========== 平均速率: %6.2f Mbps ==========", mbps_sum / 10.0);
+                mbps_sum = 0;
+                tick_count = 0;
+            }
+        }
+    }
+}
+
+/* ------------------------------------------------------------------
+ * 3. UDP 狂暴发包任务 (极限压榨网络带宽)
+ * ------------------------------------------------------------------ */
+void udp_stress_test_task(void *pvParameters) {
+    // 等待 Wi-Fi 连接成功
+    ESP_LOGI(TAG, "发包任务挂起，等待网络连接...");
+    xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT, pdFALSE, pdFALSE, portMAX_DELAY);
+    ESP_LOGI(TAG, "网络就绪！开始向 %s:%d 倾泻 UDP 数据...", DEST_SERVER_IP, DEST_SERVER_PORT);
+
+    int sock = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sock < 0) {
+        ESP_LOGE(TAG, "无法创建套接字!");
+        vTaskDelete(NULL);
+    }
+
+    struct sockaddr_in dest_addr;
+    dest_addr.sin_addr.s_addr = inet_addr(DEST_SERVER_IP);
+    dest_addr.sin_family = AF_INET;
+    dest_addr.sin_port = htons(DEST_SERVER_PORT);
+
+    // 构造一个固定大小的 dummy 数据包
+    uint8_t *payload = malloc(PAYLOAD_SIZE);
+    if (!payload) {
+        ESP_LOGE(TAG, "内存分配失败!");
+        close(sock);
+        vTaskDelete(NULL);
+    }
+    // 填充一些测试特征码
+    memset(payload, 0xAA, PAYLOAD_SIZE);
+    payload[0] = 0xDE; payload[1] = 0xAD;
+    payload[PAYLOAD_SIZE-2] = 0xBE; payload[PAYLOAD_SIZE-1] = 0xEF;
+
+    // 死循环全速发送
+    while (1) {
+        int err = sendto(sock, payload, PAYLOAD_SIZE, 0,
+                         (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+        if (err > 0) {
+            // 安全累加已发送的字节数，供监控任务读取
+            atomic_fetch_add(&total_bytes_sent, err);
+        } else {
+            // 如果底层缓冲区满了发不出去，稍微让出一下 CPU
+            vTaskDelay(pdMS_TO_TICKS(1));
+        }
+    }
+}
+
+/* ------------------------------------------------------------------
+ * 4. 主程序入口
+ * ------------------------------------------------------------------ */
 void app_main(void) {
-    // 强制链接组件库 (这是原项目的一个技巧)
-    imx219_force_link(); //
+    ESP_LOGI(TAG, "ESP32-P4 + C6 SPI 全双工链路极限压测启动...");
 
-    // 1. 底层硬件唤醒
-    imx219_hardware_init();
+    // 基础组件初始化
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+      ESP_ERROR_CHECK(nvs_flash_erase());
+      ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
 
-    // 2. 初始化高阶 Sensor 驱动框架
-    esp_cam_sensor_config_t sensor_config = {
-        .sccb_handle = NULL, // 如果传 NULL，esp_cam_sensor 内部会自己去初始化 I2C (如果有相关接口的话)。
-                             // 注意：为了稳妥，你可能需要先初始化 i2c_master_bus，然后再调传感器。
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+    esp_netif_create_default_wifi_sta();
+
+    wifi_event_group = xEventGroupCreate();
+
+    // 注册事件监听器
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handler, NULL, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &event_handler, NULL, NULL));
+
+    // 配置由 ESP-Hosted 托管的 Wi-Fi 驱动
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+    wifi_config_t wifi_config = {
+        .sta = {
+            .ssid = TEST_WIFI_SSID,
+            .password = TEST_WIFI_PASS,
+            // 如果你知道路由器的频段，强制设置可以加快连接速度
+            // .channel = 1,
+        },
     };
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
+    ESP_ERROR_CHECK(esp_wifi_start());
 
-    // 假设你在 main 里自己初始化了 I2C bus:
-    i2c_master_bus_config_t i2c_mst_config = {
-        .clk_source = I2C_CLK_SRC_DEFAULT,
-        .i2c_port = I2C_NUM_0,
-        .scl_io_num = I2C_MASTER_SCL_IO,
-        .sda_io_num = I2C_MASTER_SDA_IO,
-        .glitch_ignore_cnt = 7,
-        .flags.enable_internal_pullup = false,
-    };
-    i2c_master_bus_handle_t bus_handle;
-    ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &bus_handle));
+    // 创建压测相关任务
+    // 监控任务优先级高一些，确保准时打印
+    xTaskCreatePinnedToCore(throughput_monitor_task, "monitor_task", 4096, NULL, 5, NULL, 0);
 
-    // 需要根据 esp_cam_sensor 库的实际定义，将你的 bus_handle 传递进去。
-    // 在这个 PoC 的组件代码中，它期望配置里有 .sccb_handle
-    // （在具体实现中，可能需要用到 esp_sccb_intf.h 相关的转换函数）
-    // ... 这里需要你结合 IDF v5.5 和项目的 main.c 做最终的参数对齐。
-
-    // ... 后续逻辑为通过 esp_cam_sensor API 拉起数据流
-    ESP_LOGI(TAG, "一切就绪，IMX219 驱动组件已加载！");
+    // 发包任务优先级略低，放在另一个核心或者同一个核心疯狂压榨 CPU
+    xTaskCreatePinnedToCore(udp_stress_test_task, "udp_tx_task", 4096, NULL, 4, NULL, 1);
 }
