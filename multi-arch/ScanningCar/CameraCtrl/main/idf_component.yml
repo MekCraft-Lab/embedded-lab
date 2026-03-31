@@ -1,0 +1,4 @@
+# 文件路径: 你的项目根目录/main/idf_component.yml
+dependencies:
+  espressif/esp_video: "^1.4.0"
+  espressif/esp_cam_sensor: "^1.0.0"
