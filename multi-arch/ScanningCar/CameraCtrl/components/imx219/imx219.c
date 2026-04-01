@@ -110,7 +110,7 @@ static const esp_cam_sensor_format_t imx219_format_1080p = {
     .width = 1536,
     .height = 1232,
     .mipi_info = {
-        .mipi_clk = 456000000, 
+        .mipi_clk = 912000000,
         .lane_num = 2,
         .hs_settle = 0,
     }
