@@ -4,7 +4,6 @@ idf_component_register(SRCS "CameraCtrl.c"
         freertos
         driver
         esp_timer
-        imx219
         esp_video
         esp_cam_sensor
         nvs_flash    # <--- 必须添加这一行

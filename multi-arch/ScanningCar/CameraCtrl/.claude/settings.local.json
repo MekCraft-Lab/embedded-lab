@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(echo \"IDF_PATH=$IDF_PATH\")",
+      "Bash(find C:/env/Espressif/frameworks/esp-idf-v5.5.1 -path */jpeg* -name *.h)",
+      "Bash(powershell.exe -Command \"get-idf\")",
+      "Read(//d/Program/MekCraft-Labs/embedded-lab/multi-arch/ScanningCar/CameraCtrl/**)",
+      "Bash(1 PSEOF powershell.exe -NoProfile -ExecutionPolicy Bypass -File /tmp/build_idf.ps1)",
+      "Bash(1 PSEOF powershell.exe -NoProfile -ExecutionPolicy Bypass -File /tmp/flash_monitor.ps1)",
+      "Bash(1 PSEOF powershell.exe -NoProfile -ExecutionPolicy Bypass -File /tmp/monitor.ps1)",
+      "Bash(python:*)",
+      "Bash(powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/tmp/build_camera.ps1)"
+    ]
+  }
+}

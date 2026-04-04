@@ -4,6 +4,8 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <errno.h>
+#include <sys/poll.h>
 
 #include "esp_log.h"
 #include "esp_timer.h"
@@ -18,10 +20,9 @@
 // ==========================================
 // 🌟 引入 ESP-IDF v5.5 原生核心组件
 // ==========================================
-#include "driver/jpeg_encode.h" // v5.5 鍘熺敓纭欢 JPEG 缂栫爜鍣?#10;#include "esp_cam_sensor_detect.h"
+#include "driver/jpeg_encode.h"
 #include "esp_video_device.h"
 #include "esp_video_init.h"
-#include "imx219.h" // 浣犵殑 IMX219 椹卞姩缁勪欢
 #include "injected/esp_wifi.h"
 #include <linux/videodev2.h> // Linux V4L2 鏍囧噯鎺ュ彛
 
@@ -43,11 +44,102 @@ static const char *TAG = "P4_VIDEO_STREAM";
 #define I2C_MASTER_FREQ_HZ    100000
 #define XCLK_FREQ_HZ          20000000
 
-// --- Output Size 1536x1232 (Binning 2x2, Aligned 64-byte) ---
-#define IMG_WIDTH             1536
-#define IMG_HEIGHT            1232
+// --- Preferred capture size (match menuconfig default) ---
+#define IMG_WIDTH             800
+#define IMG_HEIGHT            640
 #define OUT_WIDTH             640
 #define OUT_HEIGHT            480
+#define CAMERA_FPS            30
+#define DQBUF_TIMEOUT_MS      1500
+#define PREFERRED_PIXFMT      V4L2_PIX_FMT_SBGGR8
+
+static uint32_t s_active_width = IMG_WIDTH;
+static uint32_t s_active_height = IMG_HEIGHT;
+static uint32_t s_active_pixfmt = PREFERRED_PIXFMT;
+
+static esp_err_t configure_capture_format(int fd, uint32_t prefer_w, uint32_t prefer_h, uint32_t prefer_pixfmt)
+{
+    const uint32_t try_pixfmts[] = {
+        prefer_pixfmt,
+        V4L2_PIX_FMT_SBGGR10,
+        V4L2_PIX_FMT_SBGGR8,
+        V4L2_PIX_FMT_RGB565,
+        V4L2_PIX_FMT_YUYV,
+    };
+    const uint32_t try_sizes[][2] = {
+        {prefer_w, prefer_h},
+        {800, 640},
+        {640, 480},
+    };
+
+    for (size_t pf = 0; pf < sizeof(try_pixfmts) / sizeof(try_pixfmts[0]); pf++) {
+        for (size_t sz = 0; sz < sizeof(try_sizes) / sizeof(try_sizes[0]); sz++) {
+            struct v4l2_format fmt = {
+                .type = V4L2_BUF_TYPE_VIDEO_CAPTURE,
+                .fmt.pix.width = try_sizes[sz][0],
+                .fmt.pix.height = try_sizes[sz][1],
+                .fmt.pix.pixelformat = try_pixfmts[pf],
+            };
+            if (ioctl(fd, VIDIOC_S_FMT, &fmt) == 0) {
+                s_active_width = fmt.fmt.pix.width;
+                s_active_height = fmt.fmt.pix.height;
+                s_active_pixfmt = fmt.fmt.pix.pixelformat;
+                ESP_LOGW(TAG, "S_FMT selected: pixfmt=0x%08lx, %lux%lu", (unsigned long)fmt.fmt.pix.pixelformat,
+                         (unsigned long)s_active_width, (unsigned long)s_active_height);
+                return ESP_OK;
+            }
+        }
+    }
+
+    ESP_LOGW(TAG, "Direct S_FMT trials failed, start enumerating supported formats...");
+
+    for (uint32_t fi = 0; ; fi++) {
+        struct v4l2_fmtdesc fmtdesc = {
+            .index = fi,
+            .type = V4L2_BUF_TYPE_VIDEO_CAPTURE,
+        };
+        if (ioctl(fd, VIDIOC_ENUM_FMT, &fmtdesc) != 0) {
+            break;
+        }
+
+        struct v4l2_frmsizeenum fsize = {
+            .index = 0,
+            .pixel_format = fmtdesc.pixelformat,
+            .type = V4L2_BUF_TYPE_VIDEO_CAPTURE,
+        };
+        if (ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &fsize) != 0) {
+            continue;
+        }
+
+        for (uint32_t si = 0; ; si++) {
+            fsize.index = si;
+            if (ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &fsize) != 0) {
+                break;
+            }
+
+            if (fsize.type != V4L2_FRMSIZE_TYPE_DISCRETE) {
+                continue;
+            }
+
+            struct v4l2_format try_fmt = {
+                .type = V4L2_BUF_TYPE_VIDEO_CAPTURE,
+                .fmt.pix.width = fsize.discrete.width,
+                .fmt.pix.height = fsize.discrete.height,
+                .fmt.pix.pixelformat = fmtdesc.pixelformat,
+            };
+            if (ioctl(fd, VIDIOC_S_FMT, &try_fmt) == 0) {
+                s_active_width = try_fmt.fmt.pix.width;
+                s_active_height = try_fmt.fmt.pix.height;
+                s_active_pixfmt = try_fmt.fmt.pix.pixelformat;
+                ESP_LOGW(TAG, "Enum fallback S_FMT selected: pixfmt=0x%08lx, %lux%lu", (unsigned long)try_fmt.fmt.pix.pixelformat,
+                         (unsigned long)s_active_width, (unsigned long)s_active_height);
+                return ESP_OK;
+            }
+        }
+    }
+
+    return ESP_FAIL;
+}
 
 // ================== 全局变量与事件 ==================
 static EventGroupHandle_t wifi_event_group;
@@ -94,7 +186,7 @@ void send_jpeg_frame_udp(const uint8_t *jpeg_buf, uint32_t jpeg_len) {
 
         memcpy(packet_buf + sizeof(video_packet_header_t), jpeg_buf + offset, chunk_len);
 
-        int total_send_len = sizeof(video_packet_header_t) + chunk_len;
+        size_t total_send_len = sizeof(video_packet_header_t) + chunk_len;
         sendto(video_sock, packet_buf, total_send_len, 0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
 
         offset += chunk_len;
@@ -107,11 +199,67 @@ void send_jpeg_frame_udp(const uint8_t *jpeg_buf, uint32_t jpeg_len) {
 static int *s_x_lut = NULL;
 static int *s_y_lut = NULL;
 
+static esp_err_t set_stream_fps(int fd, uint32_t fps)
+{
+    struct v4l2_streamparm sparm = {0};
+    sparm.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    sparm.parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
+    sparm.parm.capture.timeperframe.numerator = 1;
+    sparm.parm.capture.timeperframe.denominator = fps;
+    if (ioctl(fd, VIDIOC_S_PARM, &sparm) != 0) {
+        ESP_LOGW(TAG, "VIDIOC_S_PARM failed: %s", strerror(errno));
+        return ESP_FAIL;
+    }
+    return ESP_OK;
+}
+
+static esp_err_t wait_for_frame_ready(int fd, int timeout_ms)
+{
+    struct pollfd pfd = {
+        .fd = fd,
+        .events = POLLIN,
+    };
+    int ret = poll(&pfd, 1, timeout_ms);
+    if (ret < 0) {
+        ESP_LOGE(TAG, "poll failed: %s", strerror(errno));
+        return ESP_FAIL;
+    }
+    if (ret == 0) {
+        ESP_LOGW(TAG, "wait frame timeout (%d ms)", timeout_ms);
+        return ESP_ERR_TIMEOUT;
+    }
+    return ESP_OK;
+}
+
 static void init_demosaic_luts(int width, int height) {
+    if (s_x_lut) {
+        free(s_x_lut);
+        s_x_lut = NULL;
+    }
+    if (s_y_lut) {
+        free(s_y_lut);
+        s_y_lut = NULL;
+    }
+
     s_x_lut = malloc(OUT_WIDTH * sizeof(int));
     s_y_lut = malloc(OUT_HEIGHT * sizeof(int));
-    for (int y = 0; y < OUT_HEIGHT; y++) s_y_lut[y] = ((y * 192) / 100) & ~1;
-    for (int x = 0; x < OUT_WIDTH; x++) s_x_lut[x] = ((x * 192) / 100) & ~1;
+    if (!s_x_lut || !s_y_lut) {
+        ESP_LOGE(TAG, "Failed to allocate demosaic LUTs");
+        return;
+    }
+
+    int max_x = (width > 2) ? (width - 2) : 0;
+    int max_y = (height > 2) ? (height - 2) : 0;
+    for (int y = 0; y < OUT_HEIGHT; y++) {
+        int src_y = (y * height) / OUT_HEIGHT;
+        if (src_y > max_y) src_y = max_y;
+        s_y_lut[y] = src_y & ~1;
+    }
+    for (int x = 0; x < OUT_WIDTH; x++) {
+        int src_x = (x * width) / OUT_WIDTH;
+        if (src_x > max_x) src_x = max_x;
+        s_x_lut[x] = src_x & ~1;
+    }
 }
 
 static void demosaic_bggr_to_rgb(const uint8_t *raw10, uint8_t *rgb, int width, int height) {
@@ -146,6 +294,32 @@ static void demosaic_bggr_to_rgb(const uint8_t *raw10, uint8_t *rgb, int width, 
     }
 }
 
+static void demosaic_bggr8_to_rgb(const uint8_t *raw8, uint8_t *rgb, int width, int height) {
+    int out_w = OUT_WIDTH; int out_h = OUT_HEIGHT;
+    for (int y = 0; y < out_h; y++) {
+        int src_y = s_y_lut[y];
+        int row0 = src_y * width;
+        int row1 = (src_y + 1) * width;
+        int out_row_idx = (out_h - 1 - y) * out_w;
+        for (int x = 0; x < out_w; x++) {
+            int src_x = s_x_lut[x];
+            uint8_t b = raw8[row0 + src_x];
+            uint8_t g1 = raw8[row0 + src_x + 1];
+            uint8_t g2 = raw8[row1 + src_x];
+            uint8_t r = raw8[row1 + src_x + 1];
+            uint8_t g = (g1 + g2) >> 1;
+
+            uint32_t r_gain = (s_digital_gain * s_wb_red) >> 7;
+            uint32_t g_gain = s_digital_gain;
+            uint32_t b_gain = (s_digital_gain * s_wb_blue) >> 7;
+            int out_idx = (out_row_idx + (out_w - 1 - x)) * 3;
+            rgb[out_idx + 0] = (uint8_t)(((r * r_gain) >> 7) > 255 ? 255 : ((r * r_gain) >> 7));
+            rgb[out_idx + 1] = (uint8_t)(((g * g_gain) >> 7) > 255 ? 255 : ((g * g_gain) >> 7));
+            rgb[out_idx + 2] = (uint8_t)(((b * b_gain) >> 7) > 255 ? 255 : ((b * b_gain) >> 7));
+        }
+    }
+}
+
 /* ==========================================================
  * 辅助函数 3：网络事件回调
  * ========================================================== */
@@ -170,7 +344,7 @@ void app_main(void)
 {
 
     esp_log_level_set("*", ESP_LOG_INFO);
-    ESP_LOGI(TAG, "==== ESP32-P4 + IMX219 视频推流启动 ====");
+    ESP_LOGI(TAG, "==== ESP32-P4 + OV5647 视频推流启动 ====");
 
     // ==========================================
     // 1. 网络系统初始化 (基于 ESP-Hosted C6)
@@ -236,10 +410,10 @@ void app_main(void)
     }
 
     // ==========================================
-    // 3. 初始化 IMX219 与 V4L2 摄像头节点
+    // 3. 初始化 OV5647 与 V4L2 摄像头节点
     // ==========================================
     // 2. 【关键移植】硬件上电与时钟初始化
-    ESP_LOGI(TAG, "正在为 IMX219 准备硬件环境...");
+    ESP_LOGI(TAG, "正在为 OV5647 准备硬件环境...");
 
     // A. 拉高 PWDN 引脚 (唤醒传感器)
     gpio_config_t conf = {
@@ -254,7 +428,7 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(10));
 
 
-    // B. 启动 XCLK (24MHz)
+    // B. 启动 XCLK (OV5647 常用 24MHz)
     // 传感器必须有 XCLK 才能响应 I2C
     ledc_timer_config_t ledc_timer = {
         .speed_mode = LEDC_LOW_SPEED_MODE,
@@ -281,7 +455,6 @@ void app_main(void)
     init_demosaic_luts(IMG_WIDTH, IMG_HEIGHT);
 
     vTaskDelay(pdMS_TO_TICKS(50));
-    imx219_force_link(); // 强制链接底层驱动
 
     esp_video_init_csi_config_t csi_config = {
         .sccb_config = {
@@ -302,28 +475,28 @@ void app_main(void)
     }
     vTaskDelay(pdMS_TO_TICKS(500));
 
-    int fd = open(ESP_VIDEO_MIPI_CSI_DEVICE_NAME, O_RDWR);
+    int fd = open(ESP_VIDEO_MIPI_CSI_DEVICE_NAME, O_RDONLY);
     if (fd < 0) {
         ESP_LOGE(TAG, "依然无法打开设备，错误码: %d", errno);
         return;
     }
 
+    struct v4l2_capability capability = {0};
+    if (ioctl(fd, VIDIOC_QUERYCAP, &capability) != 0) {
+        ESP_LOGE(TAG, "VIDIOC_QUERYCAP failed: %s", strerror(errno));
+        return;
+    }
+    ESP_LOGI(TAG, "Video Driver: %s, Card: %s", capability.driver, capability.card);
+
     // ==========================================================
     // 第一步：先设置格式 (此时不要管 esp_cam_sensor_set_format，直接 ioctl)
     // ==========================================================
-    struct v4l2_format v_fmt = {
-        .type = V4L2_BUF_TYPE_VIDEO_CAPTURE,
-        .fmt.pix.width = IMG_WIDTH,
-        .fmt.pix.height = IMG_HEIGHT,
-        .fmt.pix.pixelformat = V4L2_PIX_FMT_SBGGR10, // 确保这是驱动支持的像素格式
-    };
-
-    // V4L2 层的 S_FMT 会自动触发底层的传感器配置
-    if (ioctl(fd, VIDIOC_S_FMT, &v_fmt) != 0) {
-        ESP_LOGE(TAG, "❌ VIDIOC_S_FMT 失败！这意味着驱动不支持 1920x1080 或 SBGGR10");
-        // 如果报错，请尝试将 1920/1080 改为 640/480 测试
+    if (configure_capture_format(fd, IMG_WIDTH, IMG_HEIGHT, PREFERRED_PIXFMT) != ESP_OK) {
+        ESP_LOGE(TAG, "❌ VIDIOC_S_FMT 失败！未找到驱动支持的格式/分辨率组合");
         return;
     }
+    init_demosaic_luts((int)s_active_width, (int)s_active_height);
+    set_stream_fps(fd, CAMERA_FPS);
     ESP_LOGI(TAG, "✅ 格式匹配成功，MIPI 时钟已同步");
 
     // ==========================================================
@@ -347,11 +520,21 @@ void app_main(void)
             .memory = V4L2_MEMORY_MMAP,
             .index = i
         };
-        ioctl(fd, VIDIOC_QUERYBUF, &b);
-        mapped_bufs[i] = mmap(NULL, b.length, PROT_READ | PROT_WRITE, MAP_SHARED, fd, b.m.offset);
+        if (ioctl(fd, VIDIOC_QUERYBUF, &b) != 0) {
+            ESP_LOGE(TAG, "❌ QUERYBUF[%d] failed: %s", i, strerror(errno));
+            return;
+        }
+        mapped_bufs[i] = mmap(NULL, b.length, PROT_READ | PROT_WRITE, MAP_SHARED, fd, (off_t)b.m.offset);
+        if (mapped_bufs[i] == MAP_FAILED) {
+            ESP_LOGE(TAG, "❌ mmap[%d] failed: %s", i, strerror(errno));
+            return;
+        }
 
         // 初始入队
-        ioctl(fd, VIDIOC_QBUF, &b);
+        if (ioctl(fd, VIDIOC_QBUF, &b) != 0) {
+            ESP_LOGE(TAG, "❌ QBUF[%d] failed: %s", i, strerror(errno));
+            return;
+        }
     }
 
     struct v4l2_format actual_fmt = { .type = V4L2_BUF_TYPE_VIDEO_CAPTURE };
@@ -379,14 +562,29 @@ void app_main(void)
 
     ESP_LOGI(TAG, "开始循环");
     while (1) {
+        if (wait_for_frame_ready(fd, DQBUF_TIMEOUT_MS) != ESP_OK) {
+            continue;
+        }
+
         // 出队：获取一帧原始画面
-        ESP_LOGI(TAG, "等待 DQBUF...");
+        memset(&buf_dq, 0, sizeof(buf_dq));
+        buf_dq.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        buf_dq.memory = V4L2_MEMORY_MMAP;
         if (ioctl(fd, VIDIOC_DQBUF, &buf_dq) == 0) {
             ESP_LOGI(TAG, "成功获取一帧数据，大小: %ld", buf_dq.bytesused);
+            if (!(buf_dq.flags & V4L2_BUF_FLAG_DONE) || (buf_dq.flags & V4L2_BUF_FLAG_ERROR)) {
+                ESP_LOGW(TAG, "frame flagged invalid, recycle buffer");
+                ioctl(fd, VIDIOC_QBUF, &buf_dq);
+                continue;
+            }
             uint8_t *raw_data = (uint8_t*)mapped_bufs[buf_dq.index];
             ESP_LOGI(TAG, "开始软件去马赛克...");
             // 步骤 A: 软件拜耳去马赛克 (RAW10 -> RGB888)
-            demosaic_bggr_to_rgb(raw_data, rgb_buf, IMG_WIDTH, IMG_HEIGHT);
+            if (s_active_pixfmt == V4L2_PIX_FMT_SBGGR8) {
+                demosaic_bggr8_to_rgb(raw_data, rgb_buf, (int)s_active_width, (int)s_active_height);
+            } else {
+                demosaic_bggr_to_rgb(raw_data, rgb_buf, (int)s_active_width, (int)s_active_height);
+            }
 
             ESP_LOGI(TAG, "去马赛克完成，开始 JPEG 编码...");
             // 步骤 B: 硬件极速 JPEG 编码
@@ -427,3 +625,4 @@ void app_main(void)
         }
     }
 }
+
