@@ -46,9 +46,9 @@ static const char *TAG = "P4_VIDEO_STREAM";
 #define I2C_MASTER_NUM        0
 #define I2C_MASTER_FREQ_HZ    100000
 
-#define IMG_WIDTH             800
-#define IMG_HEIGHT            640
-#define CAMERA_FPS            50
+#define IMG_WIDTH             1280
+#define IMG_HEIGHT            960
+#define CAMERA_FPS            45
 #define DQBUF_TIMEOUT_MS      1500
 #define PREFERRED_PIXFMT      V4L2_PIX_FMT_RGB565
 #define PERF_REPORT_INTERVAL_US 1000000
