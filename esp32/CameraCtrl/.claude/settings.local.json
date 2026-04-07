@@ -10,7 +10,12 @@
       "Bash(1 PSEOF powershell.exe -NoProfile -ExecutionPolicy Bypass -File /tmp/flash_monitor.ps1)",
       "Bash(1 PSEOF powershell.exe -NoProfile -ExecutionPolicy Bypass -File /tmp/monitor.ps1)",
       "Bash(python:*)",
-      "Bash(powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/tmp/build_camera.ps1)"
+      "Bash(powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/tmp/build_camera.ps1)",
+      "Bash(source /c/env/Espressif/frameworks/esp-idf-v5.5.1/export.sh)",
+      "Bash(idf.py build:*)",
+      "mcp__ide__getDiagnostics",
+      "Read(//mnt/d/Program/MekCraft-Labs/embedded-lab/multi-arch/ScanningCar/**)",
+      "Bash(/dev/null idf.py build)"
     ]
   }
 }

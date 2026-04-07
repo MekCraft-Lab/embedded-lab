@@ -33,7 +33,7 @@ build/
 cmake*
 !*/CMakeLists.txt
 !CMakeLists.txt
-*/managed_components/*
+/managed_components/
 
 
 
