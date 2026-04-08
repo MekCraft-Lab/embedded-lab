@@ -12,6 +12,7 @@
 #include "nvs_flash.h"
 #include "esp_event.h"
 #include "lwip/sockets.h"
+#include "mdns.h"
 #include "esp_cam_sensor_xclk.h"
 #include "driver/gpio.h"
 #include "driver/i2c_master.h"
@@ -32,6 +33,9 @@ static const char *TAG = "P4_VIDEO_STREAM";
 #define TARGET_WIFI_PASS      "tjurm2020"
 #define DEST_PC_IP            "192.168.28.125"
 #define DEST_PC_PORT          5000
+#define MDNS_HOSTNAME         "esp32cam"
+#define MDNS_SERVICE_TYPE     "_video-stream"
+#define MDNS_SERVICE_PROTO    "_udp"
 #define UDP_MTU               1400
 #define UDP_SEND_GAP_US       0
 #define V4L2_BUF_COUNT        4
@@ -631,6 +635,21 @@ static void encode_send_task(void *arg)
     }
 }
 
+// ================== mDNS 初始化 ==================
+
+static void init_mdns(void) {
+    esp_err_t ret = mdns_init();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "mDNS init failed: %s", esp_err_to_name(ret));
+        return;
+    }
+    mdns_hostname_set(MDNS_HOSTNAME);
+    mdns_instance_name_set("ESP32-P4 Camera Stream");
+    mdns_service_add(NULL, MDNS_SERVICE_TYPE, MDNS_SERVICE_PROTO, DEST_PC_PORT, NULL, 0);
+    ESP_LOGI(TAG, "mDNS: http://%s.local  service: %s.%s:%d",
+             MDNS_HOSTNAME, MDNS_SERVICE_TYPE, MDNS_SERVICE_PROTO, DEST_PC_PORT);
+}
+
 // ================== 网络事件回调 ==================
 
 static void wifi_event_handler(void* arg, esp_event_base_t event_base,
@@ -647,7 +666,10 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
     }
 }
 
+
+
 // ================== 主函数 ==================
+
 
 void app_main(void)
 {
@@ -676,6 +698,9 @@ void app_main(void)
 
     ESP_LOGI(TAG, "Waiting for WiFi...");
     xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT, pdFALSE, pdFALSE, portMAX_DELAY);
+
+    // mDNS: 广播设备名称, PC 可通过 esp32cam.local 发现设备
+    init_mdns();
 
     video_sock = socket(AF_INET, SOCK_DGRAM, 0);
     dest_addr.sin_addr.s_addr = inet_addr(DEST_PC_IP);

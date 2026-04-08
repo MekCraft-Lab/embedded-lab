@@ -11,5 +11,6 @@ idf_component_register(SRCS "CameraCtrl.c"
         esp_netif    # 如果用到了网络接口也建议加上
         esp_video
         esp_driver_jpeg
+        mdns
 
 )

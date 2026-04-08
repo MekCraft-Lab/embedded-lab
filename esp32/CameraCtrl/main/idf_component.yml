@@ -4,3 +4,4 @@ dependencies:
   espressif/esp_cam_sensor: "^1.0.0"
   espressif/esp_wifi_remote: "*"
   espressif/esp_hosted: "*"
+  espressif/mdns: "*"

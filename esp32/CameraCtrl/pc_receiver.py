@@ -1,6 +1,9 @@
 """
 PC receiver for CameraCtrl UDP JPEG stream.
 
+Uses mDNS to discover the ESP32 device (esp32cam.local) automatically,
+then listens for the UDP video stream.
+
 Protocol from current firmware (`video_packet_header_t`):
 - uint32 magic     = 0x4A504547 ("JPEG")
 - uint32 frame_id
@@ -13,6 +16,7 @@ import argparse
 import os
 import socket
 import struct
+import threading
 import time
 
 import cv2
@@ -21,6 +25,9 @@ import numpy as np
 MAGIC = 0x4A504547
 HDR_FMT = "<IIII"
 HDR_SIZE = struct.calcsize(HDR_FMT)
+
+MDNS_SERVICE_TYPE = "_video-stream._udp.local."
+MDNS_HOSTNAME = "esp32cam"
 
 
 class PendingFrame:
@@ -55,16 +62,99 @@ class PendingFrame:
         return bytes(out)
 
 
+def discover_esp32(timeout: int = 10) -> dict | None:
+    """Discover ESP32 camera via mDNS service browsing."""
+    try:
+        from zeroconf import Zeroconf, ServiceBrowser
+    except ImportError:
+        print("[mDNS] zeroconf not installed. Install with: pip install zeroconf")
+        print("[mDNS] Falling back to socket resolution...")
+        return _resolve_fallback(timeout)
+
+    result = {"ip": None, "port": None, "name": None}
+    found_event = threading.Event()
+
+    class Listener:
+        def add_service(self, zc, type_: str, name: str) -> None:
+            info = zc.get_service_info(type_, name)
+            if info and info.addresses:
+                ip = socket.inet_ntoa(info.addresses[0])
+                result["ip"] = ip
+                result["port"] = info.port
+                result["name"] = name
+                found_event.set()
+
+        def update_service(self, zc, type_: str, name: str) -> None:
+            pass
+
+        def remove_service(self, zc, type_: str, name: str) -> None:
+            pass
+
+    print(f"[mDNS] Searching for ESP32 camera ({timeout}s)...")
+    zc = Zeroconf()
+    listener = Listener()
+    browser = ServiceBrowser(zc, MDNS_SERVICE_TYPE, listener)
+
+    found = found_event.wait(timeout)
+    browser.cancel()
+    zc.close()
+
+    if found and result["ip"]:
+        print(f"[mDNS] Found {result['name']} at {result['ip']}:{result['port']}")
+        return result
+
+    print("[mDNS] Device not found via service browse, trying hostname resolution...")
+    return _resolve_fallback(3)
+
+
+def _resolve_fallback(timeout: int) -> dict | None:
+    """Fallback: try to resolve esp32cam.local via socket or zeroconf hostname."""
+    # Method 1: system resolver (works with Bonjour/Avahi)
+    try:
+        ip = socket.gethostbyname(f"{MDNS_HOSTNAME}.local")
+        print(f"[mDNS] Resolved {MDNS_HOSTNAME}.local -> {ip}")
+        return {"ip": ip, "port": 5000, "name": f"{MDNS_HOSTNAME}.local"}
+    except socket.gaierror:
+        pass
+
+    # Method 2: zeroconf hostname resolution
+    try:
+        from zeroconf import Zeroconf
+        zc = Zeroconf()
+        addr = zc.resolve_name(f"{MDNS_HOSTNAME}.local.", timeout * 1000)
+        zc.close()
+        if addr:
+            ip = socket.inet_ntoa(addr)
+            print(f"[mDNS] Resolved {MDNS_HOSTNAME}.local -> {ip}")
+            return {"ip": ip, "port": 5000, "name": f"{MDNS_HOSTNAME}.local"}
+    except Exception:
+        pass
+
+    print("[mDNS] Could not resolve device. Continuing without discovery.")
+    return None
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Receive UDP JPEG stream from ESP32-P4")
     parser.add_argument("--listen-ip", default="0.0.0.0")
     parser.add_argument("--listen-port", type=int, default=5000)
     parser.add_argument("--save-dir", default="")
     parser.add_argument("--no-display", action="store_true")
+    parser.add_argument("--no-mdns", action="store_true", help="Skip mDNS discovery")
+    parser.add_argument("--mdns-timeout", type=int, default=10, help="mDNS discovery timeout (seconds)")
     args = parser.parse_args()
 
     if args.save_dir:
         os.makedirs(args.save_dir, exist_ok=True)
+
+    # mDNS discovery
+    device_info = None
+    if not args.no_mdns:
+        device_info = discover_esp32(args.mdns_timeout)
+        if device_info:
+            print(f"[INFO] Device discovered: {device_info['ip']}:{device_info['port']}")
+        else:
+            print("[INFO] mDNS discovery failed. Listening for any source...")
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -84,7 +174,7 @@ def main() -> None:
 
     while True:
         try:
-            packet, _ = sock.recvfrom(2048)
+            packet, addr = sock.recvfrom(2048)
         except socket.timeout:
             now = time.time()
             stale = [fid for fid, fr in pending.items() if now - fr.last_update > 2.0]
