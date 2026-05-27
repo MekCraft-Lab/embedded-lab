@@ -31,8 +31,9 @@ static const char *TAG = "P4_VIDEO_STREAM";
 // ================== 网络参数配置区 ==================
 #define TARGET_WIFI_SSID      "TJURM"
 #define TARGET_WIFI_PASS      "tjurm2020"
-#define DEST_PC_IP            "192.168.28.125"
+#define DEST_PC_IP            "192.168.28.125"   // fallback, PC 未注册时使用
 #define DEST_PC_PORT          5000
+#define PC_REGISTER_TIMEOUT   30                 // 等待 PC 注册包的超时(秒)
 #define MDNS_HOSTNAME         "esp32cam"
 #define MDNS_SERVICE_TYPE     "_video-stream"
 #define MDNS_SERVICE_PROTO    "_udp"
@@ -132,6 +133,68 @@ typedef struct {
     uint32_t total_len;
     uint32_t offset;
 } __attribute__((packed)) video_packet_header_t;
+
+// --- PC 注册协议 ---
+#define REGISTER_MAGIC  0x52454700  // "REG\0"
+static volatile bool s_pc_registered = false;
+static struct sockaddr_in s_pc_addr;
+
+static bool poll_pc_register(int sock)
+{
+    bool updated = false;
+    uint8_t buf[64];
+
+    while (true) {
+        struct sockaddr_in src;
+        socklen_t slen = sizeof(src);
+        ssize_t n = recvfrom(sock, buf, sizeof(buf), MSG_DONTWAIT,
+                             (struct sockaddr *)&src, &slen);
+        if (n < 0) {
+            break;
+        }
+        if (n < 4) {
+            continue;
+        }
+
+        uint32_t magic;
+        memcpy(&magic, buf, 4);
+        if (magic != REGISTER_MAGIC) {
+            continue;
+        }
+
+        bool changed = !s_pc_registered
+            || s_pc_addr.sin_addr.s_addr != src.sin_addr.s_addr
+            || s_pc_addr.sin_port != src.sin_port;
+        s_pc_addr = src;
+        s_pc_registered = true;
+        updated = true;
+
+        if (changed) {
+            esp_ip4_addr_t ip4 = { .addr = src.sin_addr.s_addr };
+            ESP_LOGI(TAG, "PC registered from " IPSTR ":%d",
+                     IP2STR(&ip4), ntohs(src.sin_port));
+        }
+    }
+
+    return updated;
+}
+
+static bool wait_for_pc_register(int sock, int timeout_sec)
+{
+    ESP_LOGI(TAG, "Waiting for PC register packet (timeout %ds)...", timeout_sec);
+
+    uint64_t t0 = esp_timer_get_time();
+    while ((esp_timer_get_time() - t0) < (uint64_t)timeout_sec * 1000000) {
+        if (poll_pc_register(sock)) {
+            return true;
+        }
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+    esp_ip4_addr_t fallback_ip4 = { .addr = dest_addr.sin_addr.s_addr };
+    ESP_LOGW(TAG, "PC register timeout, using fallback " IPSTR,
+             IP2STR(&fallback_ip4));
+    return false;
+}
 
 // ================== 辅助函数 ==================
 
@@ -284,6 +347,11 @@ static void send_jpeg_frame_udp(const uint8_t *jpeg_buf, uint32_t jpeg_len) {
     static uint32_t current_frame_id = 0;
     if (video_sock < 0 || jpeg_buf == NULL || jpeg_len == 0) return;
 
+    poll_pc_register(video_sock);
+
+    // PC 注册后使用注册地址, 否则使用 fallback dest_addr
+    struct sockaddr_in *target = s_pc_registered ? &s_pc_addr : &dest_addr;
+
     uint32_t offset = 0;
     uint8_t packet_buf[UDP_MTU + sizeof(video_packet_header_t)];
 
@@ -299,7 +367,7 @@ static void send_jpeg_frame_udp(const uint8_t *jpeg_buf, uint32_t jpeg_len) {
 
         memcpy(packet_buf + sizeof(video_packet_header_t), jpeg_buf + offset, chunk_len);
         sendto(video_sock, packet_buf, sizeof(video_packet_header_t) + chunk_len,
-               0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+               0, (struct sockaddr *)target, sizeof(*target));
 
         offset += chunk_len;
         if (UDP_SEND_GAP_US > 0) {
@@ -706,7 +774,25 @@ void app_main(void)
     dest_addr.sin_addr.s_addr = inet_addr(DEST_PC_IP);
     dest_addr.sin_family = AF_INET;
     dest_addr.sin_port = htons(DEST_PC_PORT);
-    ESP_LOGI(TAG, "UDP -> %s:%d", DEST_PC_IP, DEST_PC_PORT);
+    ESP_LOGI(TAG, "UDP fallback -> %s:%d", DEST_PC_IP, DEST_PC_PORT);
+
+    // 绑定 UDP 端口以接收 PC 注册包
+    struct sockaddr_in bind_addr = {
+        .sin_family = AF_INET,
+        .sin_addr.s_addr = htonl(INADDR_ANY),
+        .sin_port = htons(DEST_PC_PORT),
+    };
+    if (bind(video_sock, (struct sockaddr *)&bind_addr, sizeof(bind_addr)) != 0) {
+        ESP_LOGW(TAG, "bind UDP port %d failed: %s", DEST_PC_PORT, strerror(errno));
+    }
+
+    // 等待 PC 发送注册包, 超时后使用 fallback 地址
+    wait_for_pc_register(video_sock, PC_REGISTER_TIMEOUT);
+    if (s_pc_registered) {
+        esp_ip4_addr_t auto_ip4 = { .addr = s_pc_addr.sin_addr.s_addr };
+        ESP_LOGI(TAG, "Video stream -> " IPSTR ":%d (auto)",
+                 IP2STR(&auto_ip4), ntohs(s_pc_addr.sin_port));
+    }
 
     // 2. JPEG 编码器初始化
     jpeg_encode_engine_cfg_t eng_cfg = { .timeout_ms = 3000 };
