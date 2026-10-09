@@ -1,0 +1,1 @@
+C:\Xilinx\Vitis\2022.2\bin\xsct.bat .\generate_standalone_bsp.tcl

@@ -1,0 +1,4 @@
+bsp/*
+!bsp/*.xsa
+!bsp/generate_standalone_bsp.tcl
+!bsp/generate_standalone_bsp.bat
