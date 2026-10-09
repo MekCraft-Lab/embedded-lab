@@ -60,7 +60,22 @@ puts "\[INFO\]: BSP output path \[${bsp_out_dir}\]\n"
 hsi::open_hw_design $target_xsa
 hsi::create_sw_design "standalone_bsp" -os "standalone" -proc "ps7_cortexa9_0"
 hsi::generate_bsp -dir $bsp_out_dir -compile
-hsi::close_hw_design [hsi::current_hw_design]
+
 
 puts "\n\[SUCCESS\]: Standalone BSP generate completed!\n"
+
+
+# 5. 生成.ld文件
+set temp_app_dir [file normalize "$script_work_path/.temp_app"]
+hsi::generate_app -app empty_application -proc ps7_cortexa9_0 -dir "$temp_app_dir"
+file delete -force "./lscript.ld"
+file copy "$temp_app_dir/lscript.ld" "./lscript.ld"
+file delete -force "./.temp_app"
+
+# 6.生成并编译FSBL
+hsi::generate_app -app zynq_fsbl -proc ps7_cortexa9_0 -dir "./fsbl" -compile
+file copy "./fsbl/executable.elf" "./fsbl/fsbl.elf"
+
+
+hsi::close_hw_design [hsi::current_hw_design]
 exit 0
